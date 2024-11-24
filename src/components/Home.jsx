@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import UserProfile from './UserProfile';
 import AboutModal from './AboutModal';
-// import DailyModal from './DailyModal';
+import DailyModal from './DailyModal';
 
 const { height } = Dimensions.get('window');
 
@@ -102,7 +102,7 @@ const Home = () => {
 
             </View>
 
-            {/* <DailyModal visible={dailyModalVisible} onClose={() => setDailyModalVisible(false)} /> */}
+            <DailyModal visible={dailyModalVisible} onClose={() => setDailyModalVisible(false)} />
             <UserProfile visible={userProfileModalVisible} onClose={closeUserProfileModal}/>
             <AboutModal visible={aboutModalVisible} onClose={() => setAboutModalVisible(false)}/>
         </View>
