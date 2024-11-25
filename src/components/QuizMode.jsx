@@ -56,8 +56,8 @@ const QuizMode = () => {
 
             <Text style={styles.modalText}>
                 {selectedMode === "easy"
-                    ? "The First Step quiz features multiple-choice questions across 4 topics, with 10 questions per topic and 3 answer options. All topics are initially locked and unlock as you progress. Each quiz has a time limit of 1 minute and 30 seconds, with 3 lives. You can purchase hints (3 types) and extra lives to aid your progress."
-                    : "The Peak of success quiz consists of True/False questions across 10 topics, with 10 questions per topic. Each quiz has a time limit of 1 minute and 3 lives. Answering 3 consecutive questions correctly adds 30 seconds to your time. Like the Pathfinder mode, you can purchase extra lives and 2 types of hints to assist you."
+                    ? "The First Step quiz features multiple-choice questions across 4 topics, with 15 questions per topic and 3 answer options. Each quiz has a time limit of 1 minute and 30 seconds, with 3 lives. You can purchase hints (3 types) and extra lives to aid your progress."
+                    : "The Peak of success quiz consists of True/False questions across 4 topics, with 15 questions per topic. Each quiz has a time limit of 1 minute and 3 lives. Answering 3 consecutive questions correctly adds 30 seconds to your time. Like the First Step mode, you can purchase extra lives and 2 types of hints to assist you."
                 }
             </Text>
 

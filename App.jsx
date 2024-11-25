@@ -15,6 +15,9 @@ import EasyQuizScreen from './src/screens/EasyQuizScreen';
 import FactScreen from './src/screens/FactScreen';
 import PinnedScreen from './src/screens/PinnedScreen';
 import ResultsScreen from './src/screens/ResultsScreen';
+import PeakQuizScreen from './src/screens/PeakQuizScreen';
+import StoriesScreen from './src/screens/StoriesScreen';
+import ArticleScreen from './src/screens/ArticleScreen';
 
 enableScreens();
 
@@ -108,6 +111,21 @@ const App = () => {
                         <Stack.Screen 
                             name="ResultsScreen" 
                             component={ResultsScreen} 
+                            options={{ headerShown: false }} 
+                        />
+                        <Stack.Screen 
+                            name="PeakQuizScreen" 
+                            component={PeakQuizScreen} 
+                            options={{ headerShown: false }} 
+                        />
+                        <Stack.Screen 
+                            name="StoriesScreen" 
+                            component={StoriesScreen} 
+                            options={{ headerShown: false }} 
+                        />
+                        <Stack.Screen 
+                            name="ArticleScreen" 
+                            component={ArticleScreen} 
                             options={{ headerShown: false }} 
                         />
                     </Stack.Navigator>

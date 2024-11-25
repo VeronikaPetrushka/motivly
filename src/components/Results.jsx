@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Dimensions, ImageBackground, TouchableOpacity, Share } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import Icons from './Icons';
@@ -41,6 +41,25 @@ const Results = () => {
     generateUsers();
   }, []);
 
+  const handleShare = async () => {
+    try {
+      const result = await Share.share({
+        message: `Look, I scored ${totalScore} points at 'Inspire life to win'! Can you beat my score? Join and find what inspires you !`,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          console.log('Shared with activity type:', result.activityType);
+        } else {
+          console.log('Shared successfully!');
+        }
+      } else if (result.action === Share.dismissedAction) {
+        console.log('Share dismissed');
+      }
+    } catch (error) {
+      console.error('Error sharing:', error);
+    }
+  };
+
   return (
     // <ImageBackground source={require('../assets/newDiz/back1.jpg')} style={{flex: 1}}>
     <View style={styles.container}>
@@ -59,6 +78,10 @@ const Results = () => {
         )}
         keyExtractor={(item, index) => index.toString()}
       />
+
+      <TouchableOpacity style={styles.shareButton} onPress={handleShare}>
+        <Text style={styles.shareButtonText}>Share Your Score</Text>
+      </TouchableOpacity>
     </View>
     // </ImageBackground>
   );
@@ -110,6 +133,21 @@ const styles = StyleSheet.create({
   userScore: {
     fontSize: 16,
     color: '#555',
+  },
+  shareButton: {
+    width: 200,
+    backgroundColor: '#1E90FF',
+    borderRadius: 25,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginTop: 20,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  shareButtonText: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 16,
   },
 });
 

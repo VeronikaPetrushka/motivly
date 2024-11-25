@@ -36,9 +36,9 @@ const MenuPanel = () => {
 
             <View style={styles.btnContainer}>
                 <TouchableOpacity 
-                    style={[styles.button, activeButton === '' && styles.activeButton]} 
-                    onPress={() => handleNavigate('')}>
-                    <Icons type={'book'} active={activeButton === ''}/>
+                    style={[styles.button, activeButton === 'StoriesScreen' && styles.activeButton]} 
+                    onPress={() => handleNavigate('StoriesScreen')}>
+                    <Icons type={'book'} active={activeButton === 'StoriesScreen'}/>
                 </TouchableOpacity>
             </View>
 

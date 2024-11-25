@@ -40,7 +40,7 @@ const Topics = ({ difficulty }) => {
                     {difficulty === 'peak' && peak.map((item, index) => (
                         <View key={index} style={{width: '40%', marginBottom: height * 0.015, alignItems: 'center'}}>
                             <TouchableOpacity style={styles.btn} onPress={() => handleNavigation(item, 'peak')}>
-                                {/* <Image source={item.image} style={styles.image}/> */}
+                                <Image source={item.image} style={styles.image}/>
                             </TouchableOpacity>
                             <Text style={styles.btnText}>{item.topic}</Text>
                         </View>
