@@ -1,3 +1,5 @@
+// daily modal timer
+
 import React, { useState, useEffect, useCallback } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Image, ImageBackground } from "react-native"
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -15,6 +17,8 @@ const Home = () => {
     const [userProfileModalVisible, setUserProfileModalVisible] = useState(false);
     const [uploadedImage, setUploadedImage] = useState({ uri: Image.resolveAssetSource(require('../assets/avatar/user.png')).uri });
     const [userName, setUserName] = useState('');  
+    const [timeLeft, setTimeLeft] = useState('00:00:00');
+    const [intervalId, setIntervalId] = useState(null);
 
     const loadAvatar = async () => {
         try {
@@ -46,16 +50,61 @@ const Home = () => {
         }, [])
     );
 
-      useEffect(() => {
-        const interval = setInterval(() => {
-            setDailyModalVisible(false);
-            setTimeout(() => {
-                setDailyModalVisible(true);
-            }, 500);
-        }, 86400000);
+    const loadTimer = async () => {
+        try {
+            const lastClaimTime = await AsyncStorage.getItem('lastClaimTime');
+            const currentTime = new Date().getTime();
+            if (lastClaimTime) {
+                const timeDifference = currentTime - parseInt(lastClaimTime);
+                const timeRemaining = 86400000 - timeDifference;
+                if (timeRemaining > 0) {
+                    setTimeLeft(timeRemaining);
+                    startCountdown(timeRemaining);
+                } else {
+                    setTimeLeft('00:00:00');
+                }
+            } else {
+                setTimeLeft('00:00:00');
+            }
+        } catch (error) {
+            console.error('Error loading timer:', error);
+        }
+    };
+    
+    const startCountdown = (timeRemaining) => {
+        if (intervalId) {
+            clearInterval(intervalId);
+        }
+    
+        const newIntervalId = setInterval(() => {
+            if (timeRemaining <= 0) {
+                clearInterval(newIntervalId);
+                setTimeLeft('00:00:00');
+            } else {
+                setTimeLeft(timeRemaining);
+                timeRemaining -= 1000;
+            }
+        }, 1000);
+    
+        setIntervalId(newIntervalId);
+    };
+    
+      const handleDailyClose = async () => {
+    
+        setDailyModalVisible(false);
+        const currentTime = new Date().getTime();
+        await AsyncStorage.setItem('lastClaimTime', currentTime.toString());
+    
+        loadTimer();
+      };
 
-        return () => clearInterval(interval);
-    }, []); 
+      useEffect(() => {
+        return () => {
+          if (intervalId) {
+            clearInterval(intervalId);
+          }
+        };
+      }, [intervalId]);
 
       const closeUserProfileModal = async () => {
         setUserProfileModalVisible(false);
@@ -84,15 +133,15 @@ const Home = () => {
 
             <View style={styles.btnContainer}>
 
-            <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('')}>
+            <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('QuizModeScreen')}>
                 <Text style={styles.btnTxt}>Unleash your potential</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('')}>
+            <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('ResultsScreen')}>
                 <Text style={styles.btnTxt}>Results</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('')}>
+            <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('PinnedScreen')}>
                 <Text style={styles.btnTxt}>Pinned</Text>
             </TouchableOpacity>
 
@@ -102,7 +151,7 @@ const Home = () => {
 
             </View>
 
-            <DailyModal visible={dailyModalVisible} onClose={() => setDailyModalVisible(false)} />
+            <DailyModal visible={dailyModalVisible} onClose={handleDailyClose} />
             <UserProfile visible={userProfileModalVisible} onClose={closeUserProfileModal}/>
             <AboutModal visible={aboutModalVisible} onClose={() => setAboutModalVisible(false)}/>
         </View>

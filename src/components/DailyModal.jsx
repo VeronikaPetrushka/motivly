@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icons from './Icons';
 
@@ -12,35 +12,73 @@ const bonus = [
 ]
 
 const DailyModal = ({ visible, onClose }) => {
-  const [currentLegendIndex, setCurrentLegendIndex] = useState(0);
-  const [currentLegend, setCurrentLegend] = useState(bonus[currentLegendIndex]);
+  const [currentBonus, setCurrentBonus] = useState(bonus[currentBonusIndex]);
   const [rewardMessage, setRewardMessage] = useState('');
+  const [currentBonusIndex, setCurrentBonusIndex] = useState(0);
+
+  const updateBonusDay = async () => {
+    try {
+      let storedBonusDay = await AsyncStorage.getItem('bonusDay');
+      storedBonusDay = storedBonusDay ? parseInt(storedBonusDay) : 0;
+      
+      const nextBonusDay = storedBonusDay === bonus.length ? 1 : storedBonusDay + 1;
+  
+      await AsyncStorage.setItem('bonusDay', nextBonusDay.toString());
+      setCurrentBonusIndex(nextBonusDay - 1);
+    } catch (error) {
+      console.error('Error updating bonus day:', error);
+    }
+  };
+  
 
   useEffect(() => {
     if (!visible) return;
-
-    const nextIndex = (currentLegendIndex + 1) % bonus.length;
-    setCurrentLegendIndex(nextIndex);
-    setCurrentLegend(bonus[nextIndex]);
-
+  
+    const getBonusDay = async () => {
+      try {
+        const storedBonusDay = await AsyncStorage.getItem('bonusDay');
+        if (storedBonusDay) {
+          const bonusIndex = parseInt(storedBonusDay) - 1;
+          setCurrentBonusIndex(bonusIndex >= 0 ? bonusIndex : 0);
+        } else {
+          setCurrentBonusIndex(0);
+        }
+      } catch (error) {
+        console.error('Error loading bonus day:', error);
+      }
+    };
+  
+    getBonusDay();
+  }, [visible]);
+  
+  useEffect(() => {
+    if (!visible) return;
+  
+    const nextIndex = (currentBonusIndex + 1) % bonus.length;
+    setCurrentBonusIndex(nextIndex);
+    setCurrentBonus(bonus[nextIndex]);
+  
     const updateScore = async () => {
       try {
         const storedScore = await AsyncStorage.getItem('totalScore');
         const currentScore = storedScore ? parseInt(storedScore, 10) : 0;
         const updatedScore = currentScore + bonus[nextIndex].amount;
-
+  
         await AsyncStorage.setItem('totalScore', updatedScore.toString());
         setRewardMessage(
           `Receive your daily award of ${bonus[nextIndex].amount} points! Your total score is now ${updatedScore}.`
         );
+  
+        await updateBonusDay();
+  
       } catch (error) {
         console.error('Error updating totalScore:', error);
       }
     };
-
+  
     updateScore();
   }, [visible]);
-
+  
   return (
     <Modal
       animationType="fade"

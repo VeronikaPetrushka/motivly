@@ -49,11 +49,8 @@ const Settings = () => {
             await AsyncStorage.setItem('userProfile', "");
             await AsyncStorage.removeItem('uploadedImage');
             await AsyncStorage.removeItem('totalScore');
-            await AsyncStorage.removeItem('places');
-            await AsyncStorage.removeItem('catalogue');
-            await AsyncStorage.removeItem('cityBook');
-            await AsyncStorage.removeItem('purchasedTopics');
-            await AsyncStorage.removeItem('crafts');
+            await AsyncStorage.removeItem('lastClaimTime');
+            await AsyncStorage.removeItem('bonusDay');
 
             setShowResetConfirmation(false);
 

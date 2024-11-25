@@ -30,6 +30,31 @@ const Icons = ({ type }) => {
     case 'close':
         imageSource = require('../assets/common/close.png');
     break;
+    case 'heart':
+        imageSource = require('../assets/common/heart.png');
+    break;
+    case 'heart-grey':
+        imageSource = require('../assets/common/heart-grey.png');
+    break;
+    case 'hint':
+        imageSource = require('../assets/common/hint.png');
+    break;
+    case 'back':
+        imageSource = require('../assets/common/back.png');
+        iconStyle.push(styles.back);
+    break;
+    case 'arrow':
+        imageSource = require('../assets/common/arrow.png');
+    break;
+    case 'save':
+      imageSource = require('../assets/common/save.png');
+      iconStyle.push(styles.back);
+    break;
+    case 'saved':
+        imageSource = require('../assets/common/saved.png');
+        iconStyle.push(styles.back);
+    break;
+
   }
 
   return (
