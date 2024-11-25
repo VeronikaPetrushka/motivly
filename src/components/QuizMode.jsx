@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Dimensions, Modal, ImageBackground } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import Icons from "./Icons";
 
 const { height } = Dimensions.get("window");
 
@@ -26,6 +27,9 @@ const QuizMode = () => {
   return (
     // <ImageBackground source={require('../assets/newDiz/back1.jpg')} style={{flex: 1}}>
     <View style={styles.container}>
+      <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
+        <Icons type={"back"} />
+      </TouchableOpacity>
       <Text style={styles.title}>Quiz Mode</Text>
 
       <TouchableOpacity
@@ -94,6 +98,15 @@ const styles = StyleSheet.create({
     padding: 30,
     paddingTop: height * 0.07,
   },
+  back: {
+    width: 60,
+    height: 60,
+    padding: 10,
+    position: "absolute",
+    top: height * 0.04,
+    left: 10,
+    zIndex: 10,
+},
   title: {
     fontWeight: "bold",
     fontSize: 34,

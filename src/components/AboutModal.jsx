@@ -16,10 +16,10 @@ const AboutModal = ({ visible, onClose }) => {
                 <View style={styles.modalContent}>
                 <ScrollView style={styles.ScrollView}>
                     <Text style={styles.modalText}>
-                    Welcome to <Text style={styles.bold}>Goalify</Text> – your ultimate companion in unlocking the best version of yourself. This app is designed for individuals who are ready to take charge of their personal growth, achieve their goals, and embrace a journey of continuous improvement.
+                    Welcome to <Text style={styles.bold}>Inspire life to win</Text> – your ultimate companion in unlocking the best version of yourself. This app is designed for individuals who are ready to take charge of their personal growth, achieve their goals, and embrace a journey of continuous improvement.
                     </Text>
                     <Text style={styles.modalText}>
-                    At <Text style={styles.bold}>Goalify,</Text> we combine the power of goal-setting with daily motivation to keep you inspired and on track. Whether you are striving for personal development, career success, or fitness goals, our app offers the tools you need to stay focused and achieve what you set out to do.
+                    At <Text style={styles.bold}>Inspire life to win,</Text> we combine the power of goal-setting with daily motivation to keep you inspired and on track. Whether you are striving for personal development, career success, or fitness goals, our app offers the tools you need to stay focused and achieve what you set out to do.
                     </Text>
                     <Text style={styles.modalText}>
                     Here’s what you can expect:

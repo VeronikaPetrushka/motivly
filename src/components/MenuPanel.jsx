@@ -44,17 +44,17 @@ const MenuPanel = () => {
 
             <View style={styles.btnContainer}>
                 <TouchableOpacity 
-                    style={[styles.button, activeButton === '' && styles.activeButton]} 
-                    onPress={() => handleNavigate('')}>
-                    <Icons type={'goal'} active={activeButton === ''}/>
+                    style={[styles.button, activeButton === 'GoalScreen' && styles.activeButton]} 
+                    onPress={() => handleNavigate('GoalScreen')}>
+                    <Icons type={'goal'} active={activeButton === 'GoalScreen'}/>
                 </TouchableOpacity>
             </View>
 
             <View style={styles.btnContainer}>
                 <TouchableOpacity 
-                    style={[styles.button, activeButton === '' && styles.activeButton]} 
-                    onPress={() => handleNavigate('')}>
-                    <Icons type={'game'} active={activeButton === ''}/>
+                    style={[styles.button, activeButton === 'GameScreen' && styles.activeButton]} 
+                    onPress={() => handleNavigate('GameScreen')}>
+                    <Icons type={'game'} active={activeButton === 'GameScreen'}/>
                 </TouchableOpacity>
             </View>
 
