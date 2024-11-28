@@ -18,6 +18,9 @@ import ResultsScreen from './src/screens/ResultsScreen';
 import PeakQuizScreen from './src/screens/PeakQuizScreen';
 import StoriesScreen from './src/screens/StoriesScreen';
 import ArticleScreen from './src/screens/ArticleScreen';
+import GoalScreen from './src/screens/GoalScreen';
+import GuideScreen from './src/screens/GuideScreen';
+import AddGoalScreen from './src/screens/AddGoalScreen';
 
 enableScreens();
 
@@ -126,6 +129,21 @@ const App = () => {
                         <Stack.Screen 
                             name="ArticleScreen" 
                             component={ArticleScreen} 
+                            options={{ headerShown: false }} 
+                        />
+                        <Stack.Screen 
+                            name="GoalScreen" 
+                            component={GoalScreen} 
+                            options={{ headerShown: false }} 
+                        />
+                        <Stack.Screen 
+                            name="GuideScreen" 
+                            component={GuideScreen} 
+                            options={{ headerShown: false }} 
+                        />
+                        <Stack.Screen 
+                            name="AddGoalScreen" 
+                            component={AddGoalScreen} 
                             options={{ headerShown: false }} 
                         />
                     </Stack.Navigator>
