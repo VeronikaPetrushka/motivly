@@ -4,6 +4,7 @@ import game from '../constants/game';
 
 const Game = () => {
     const [level, setLevel] = useState(null);
+    const [shuffledWords, setShuffledWords] = useState([]);
     const [pressedWords, setPressedWords] = useState([]);
     const [gameCompleted, setGameCompleted] = useState(false);
     const [pressedPositive, setPressedPositive] = useState([]);
@@ -11,7 +12,30 @@ const Game = () => {
     const [pressedBonus, setPressedBonus] = useState([]);
     const [selectionCount, setSelectionCount] = useState(0);
 
-    const getRandomWords = (level) => {
+    const getSelectionLimit = (level) => {
+        switch (level) {
+            case 1:
+                return 5;
+            case 2:
+                return 7;
+            case 3:
+                return 9;
+            case 4:
+                return 10;
+            default:
+                return 0;
+        }
+    };
+
+    const startLevel = (level) => {
+        setLevel(level);
+
+        setPressedWords([]);
+        setPressedPositive([]);
+        setPressedNegative([]);
+        setPressedBonus([]);
+        setSelectionCount(0);
+
         let selectedPositive = [];
         let selectedNegative = [];
         let selectedBonus = [];
@@ -33,22 +57,18 @@ const Game = () => {
             selectedBonus = game.bonus.slice(0, 3);
         }
 
-        return { selectedPositive, selectedNegative, selectedBonus };
-    };
+        const allWords = [
+            ...selectedPositive.map((word) => ({ ...word, type: 'positive' })),
+            ...selectedNegative.map((word) => ({ ...word, type: 'negative' })),
+            ...selectedBonus.map((word) => ({ ...word, type: 'bonus' }))
+        ];
 
-    const getSelectionLimit = (level) => {
-        switch (level) {
-            case 1:
-                return 5;
-            case 2:
-                return 7;
-            case 3:
-                return 9;
-            case 4:
-                return 10;
-            default:
-                return 0;
+        for (let i = allWords.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [allWords[i], allWords[j]] = [allWords[j], allWords[i]];
         }
+
+        setShuffledWords(allWords);
     };
 
     const handlePress = (word, type) => {
@@ -64,59 +84,40 @@ const Game = () => {
         } else {
             setPressedBonus((prev) => [...prev, word]);
         }
+
         setPressedWords((prev) => [...prev, word]);
         setSelectionCount((prev) => prev + 1);
     };
 
     const renderWords = () => {
-        const { selectedPositive, selectedNegative, selectedBonus } = getRandomWords(level);
+        const columnCount = 3;
+        const columnLength = Math.ceil(shuffledWords.length / columnCount);
+
+        const columns = Array.from({ length: columnCount }, (_, index) =>
+            shuffledWords.slice(index * columnLength, (index + 1) * columnLength)
+        );
+
         return (
             <View style={styles.wordsContainer}>
-                <View style={styles.column}>
-                    {selectedPositive.map((item, index) => (
-                        <TouchableOpacity
-                            key={index}
-                            style={[
-                                styles.wordButton,
-                                pressedPositive.includes(item.word) && styles.greenButton
-                            ]}
-                            onPress={() => handlePress(item.word, 'positive')}
-                            disabled={pressedWords.includes(item.word)}
-                        >
-                            <Text>{item.word}</Text>
-                        </TouchableOpacity>
-                    ))}
-                </View>
-                <View style={styles.column}>
-                    {selectedNegative.map((item, index) => (
-                        <TouchableOpacity
-                            key={index}
-                            style={[
-                                styles.wordButton,
-                                pressedNegative.includes(item.word) && styles.redButton
-                            ]}
-                            onPress={() => handlePress(item.word, 'negative')}
-                            disabled={pressedWords.includes(item.word)}
-                        >
-                            <Text>{item.word}</Text>
-                        </TouchableOpacity>
-                    ))}
-                </View>
-                <View style={styles.column}>
-                    {selectedBonus.map((item, index) => (
-                        <TouchableOpacity
-                            key={index}
-                            style={[
-                                styles.wordButton,
-                                pressedBonus.includes(item.word) && styles.yellowButton
-                            ]}
-                            onPress={() => handlePress(item.word, 'bonus')}
-                            disabled={pressedWords.includes(item.word)}
-                        >
-                            <Text>{item.word}</Text>
-                        </TouchableOpacity>
-                    ))}
-                </View>
+                {columns.map((columnWords, columnIndex) => (
+                    <View key={columnIndex} style={styles.column}>
+                        {columnWords.map((item, wordIndex) => (
+                            <TouchableOpacity
+                                key={wordIndex}
+                                style={[
+                                    styles.wordButton,
+                                    pressedPositive.includes(item.word) && styles.greenButton,
+                                    pressedNegative.includes(item.word) && styles.redButton,
+                                    pressedBonus.includes(item.word) && styles.yellowButton,
+                                ]}
+                                onPress={() => handlePress(item.word, item.type)}
+                                disabled={pressedWords.includes(item.word)}
+                            >
+                                <Text>{item.word}</Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+                ))}
             </View>
         );
     };
@@ -126,6 +127,7 @@ const Game = () => {
         setLevel(null);
         setPressedWords([]);
         setSelectionCount(0);
+        setShuffledWords([]);
     };
 
     return (
@@ -135,16 +137,16 @@ const Game = () => {
                     <Text>Your task: Enhance concentration and positive thinking by assembling a goal from pieces while avoiding distractions.</Text>
                     {level === null ? (
                         <>
-                            <TouchableOpacity onPress={() => setLevel(1)} style={styles.levelButton}>
+                            <TouchableOpacity onPress={() => startLevel(1)} style={styles.levelButton}>
                                 <Text>Level 1</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => setLevel(2)} style={styles.levelButton}>
+                            <TouchableOpacity onPress={() => startLevel(2)} style={styles.levelButton}>
                                 <Text>Level 2</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => setLevel(3)} style={styles.levelButton}>
+                            <TouchableOpacity onPress={() => startLevel(3)} style={styles.levelButton}>
                                 <Text>Level 3</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => setLevel(4)} style={styles.levelButton}>
+                            <TouchableOpacity onPress={() => startLevel(4)} style={styles.levelButton}>
                                 <Text>Level 4</Text>
                             </TouchableOpacity>
                         </>
@@ -156,21 +158,33 @@ const Game = () => {
                 </>
             ) : (
                 <>
-                    <Text>Positive Phrases:</Text>
-                    {pressedPositive.map((word, index) => {
-                        const phrase = game.positive.find((item) => item.word === word).phrase;
-                        return <Text key={index}>{phrase}</Text>;
-                    })}
-                    <Text>Negative Phrases:</Text>
-                    {pressedNegative.map((word, index) => {
-                        const phrase = game.negative.find((item) => item.word === word).phrase;
-                        return <Text key={index}>{phrase}</Text>;
-                    })}
-                    <Text>Bonus Phrases:</Text>
-                    {pressedBonus.map((word, index) => {
-                        const phrase = game.bonus.find((item) => item.word === word).phrase;
-                        return <Text key={index}>{phrase}</Text>;
-                    })}
+                    {pressedPositive && (
+                        <View>
+                            <Text>Positive Phrases:</Text>
+                            {pressedPositive.map((word, index) => {
+                                const phrase = game.positive.find((item) => item.word === word)?.phrase || '';
+                                return <Text key={index}>{phrase}</Text>;
+                            })}
+                        </View>
+                    )}
+                    {pressedNegative && (
+                        <View>
+                            <Text>Negative Phrases:</Text>
+                            {pressedNegative.map((word, index) => {
+                                const phrase = game.negative.find((item) => item.word === word)?.phrase || '';
+                                return <Text key={index}>{phrase}</Text>;
+                            })}
+                        </View>
+                    )}
+                    {pressedBonus && (
+                        <View>
+                            <Text>Bonus Phrases:</Text>
+                            {pressedBonus.map((word, index) => {
+                                const phrase = game.bonus.find((item) => item.word === word)?.phrase || '';
+                                return <Text key={index}>{phrase}</Text>;
+                            })}
+                        </View>
+                    )}
                     <TouchableOpacity onPress={handleBack} style={styles.backButton}>
                         <Text>Go Back</Text>
                     </TouchableOpacity>
@@ -182,53 +196,45 @@ const Game = () => {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20
+        padding: 20,
     },
     levelButton: {
         margin: 10,
         padding: 10,
         backgroundColor: 'lightblue',
-        borderRadius: 5
-    },
-    finishButton: {
-        marginTop: 20,
-        padding: 10,
-        backgroundColor: 'green',
-        borderRadius: 5
-    },
-    backButton: {
-        marginTop: 20,
-        padding: 10,
-        backgroundColor: 'grey',
-        borderRadius: 5
+        borderRadius: 5,
     },
     wordsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 20
+        marginTop: 20,
     },
     column: {
-        flex: 1
-    },
-    columnTitle: {
-        fontWeight: 'bold',
-        marginBottom: 10
+        flex: 1,
+        alignItems: 'center',
     },
     wordButton: {
+        margin: 5,
         padding: 10,
-        marginBottom: 10,
-        backgroundColor: 'lightgrey',
-        borderRadius: 5
+        backgroundColor: 'lightgray',
+        borderRadius: 5,
     },
     greenButton: {
-        backgroundColor: 'green'
+        backgroundColor: 'lightgreen',
     },
     redButton: {
-        backgroundColor: 'red'
+        backgroundColor: 'lightcoral',
     },
     yellowButton: {
-        backgroundColor: 'yellow'
-    }
+        backgroundColor: 'lightyellow',
+    },
+    backButton: {
+        marginTop: 20,
+        padding: 10,
+        backgroundColor: 'orange',
+        borderRadius: 5,
+        alignItems: 'center',
+    },
 });
 
 export default Game;
