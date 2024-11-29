@@ -51,6 +51,11 @@ const Settings = () => {
             await AsyncStorage.removeItem('totalScore');
             await AsyncStorage.removeItem('lastClaimTime');
             await AsyncStorage.removeItem('bonusDay');
+            await AsyncStorage.removeItem('goalsData');
+            await AsyncStorage.removeItem('isPurchased');
+            await AsyncStorage.removeItem('pinned');
+            await AsyncStorage.removeItem('purchasedTopics');
+            await AsyncStorage.removeItem('purchasedStories');
 
             setShowResetConfirmation(false);
 

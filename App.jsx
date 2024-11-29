@@ -21,6 +21,7 @@ import ArticleScreen from './src/screens/ArticleScreen';
 import GoalScreen from './src/screens/GoalScreen';
 import GuideScreen from './src/screens/GuideScreen';
 import AddGoalScreen from './src/screens/AddGoalScreen';
+import GameScreen from './src/screens/GameScreen';
 
 enableScreens();
 
@@ -144,6 +145,11 @@ const App = () => {
                         <Stack.Screen 
                             name="AddGoalScreen" 
                             component={AddGoalScreen} 
+                            options={{ headerShown: false }} 
+                        />
+                        <Stack.Screen 
+                            name="GameScreen" 
+                            component={GameScreen} 
                             options={{ headerShown: false }} 
                         />
                     </Stack.Navigator>

@@ -28,6 +28,8 @@ const AddGoal = () => {
   const [dayOpen, setDayOpen] = useState(false);
   const [monthOpen, setMonthOpen] = useState(false);
   const [yearOpen, setYearOpen] = useState(false);
+  const [editStep, setEditStep] = useState(null);
+  const [editingField, setEditingField] = useState(null);
 
   const days = Array.from({ length: 31 }, (_, i) => ({
     label: `${(i + 1).toString().padStart(2, '0')}`,
@@ -51,22 +53,31 @@ const AddGoal = () => {
   };
 
   const handleSubmit = async () => {
-    const goalData = {
+    const date = {day: day, month: month, year: year}
+
+    const newGoal = {
       title,
       goalInput,
       successMeasure,
       resources,
       date,
       category,
+      completed: false
     };
 
     try {
-      await AsyncStorage.setItem('goalData', JSON.stringify(goalData));
+      const existingGoals = await AsyncStorage.getItem('goalsData');
+      let goalsArray = existingGoals ? JSON.parse(existingGoals) : [];
+
+      goalsArray.push(newGoal);
+
+      await AsyncStorage.setItem('goalsData', JSON.stringify(goalsArray));
+
       Alert.alert('Success', 'Goal saved successfully!');
-      navigation.navigate('GoalScreen')
-    } catch (error) {
+      navigation.navigate('GoalScreen');
+  } catch (error) {
       console.error('Error saving goal:', error);
-    }
+  }
   };
 
   const renderStep = () => {
@@ -179,6 +190,7 @@ const AddGoal = () => {
                   open={dayOpen}
                   setOpen={setDayOpen}
                   value={day}
+                  setValue={setDay}
                   onChangeValue={(val) => setDay(val)}
                   items={days}
                   placeholder="Day"
@@ -190,6 +202,7 @@ const AddGoal = () => {
                   open={monthOpen}
                   setOpen={setMonthOpen}
                   value={month}
+                  setValue={setMonth}
                   onChangeValue={(val) => setMonth(val)}
                   items={months}
                   placeholder="Month"
@@ -201,6 +214,7 @@ const AddGoal = () => {
                   open={yearOpen}
                   setOpen={setYearOpen}
                   value={year}
+                  setValue={setYear}
                   onChangeValue={(val) => setYear(val)}
                   items={years}
                   placeholder="Year"
@@ -249,34 +263,183 @@ const AddGoal = () => {
           </View>
         );
 
-      case 8:
-        return (
-          <View>
-            <Text style={styles.title}>Review Your Goal</Text>
-            <Text>Title: {title}</Text>
-            <Text>Goal: {goalInput}</Text>
-            <Text>Measure of Success: {successMeasure}</Text>
-            <Text>Resources: {resources}</Text>
-            <Text>
-              Target Date: {`${date.day}/${date.month}/${date.year}`}
-            </Text>
-            <Text>Category: {category}</Text>
-            <TouchableOpacity
-              style={[styles.submitButton]}
-              onPress={handleSubmit}
-            >
-              <Text style={styles.buttonText}>Submit</Text>
-            </TouchableOpacity>
-          </View>
-        );
-
+        case 8:
+            return (
+              <View>
+                <Text style={styles.title}>Review Your Goal</Text>
+          
+                <View style={styles.reviewField}>
+                  <Text style={styles.label}>Title:</Text>
+                  {editingField === 'title' ? (
+                    <TextInput
+                      style={styles.editInput}
+                      value={title}
+                      onChangeText={setTitle}
+                    />
+                  ) : (
+                    <Text style={{marginRight: 10}}>{title}</Text>
+                  )}
+                  <TouchableOpacity
+                    onPress={() =>
+                      setEditingField(editingField === 'title' ? null : 'title')
+                    }
+                    style={styles.editButton}
+                  >
+                    <Text style={styles.editText}>
+                      {editingField === 'title' ? 'Save' : 'Edit'}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+          
+                <View style={styles.reviewField}>
+                  <Text style={styles.label}>Goal:</Text>
+                  {editingField === 'goal' ? (
+                    <TextInput
+                      style={styles.editInput}
+                      value={goalInput}
+                      onChangeText={setGoalInput}
+                    />
+                  ) : (
+                    <Text style={{marginRight: 10}}>{goalInput}</Text>
+                  )}
+                  <TouchableOpacity
+                    onPress={() =>
+                      setEditingField(editingField === 'goal' ? null : 'goal')
+                    }
+                    style={styles.editButton}
+                  >
+                    <Text style={styles.editText}>
+                      {editingField === 'goal' ? 'Save' : 'Edit'}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+          
+                <View style={styles.reviewField}>
+                  <Text style={styles.label}>Measure of Success:</Text>
+                  {editingField === 'successMeasure' ? (
+                    <TextInput
+                      style={styles.editInput}
+                      value={successMeasure}
+                      onChangeText={setSuccessMeasure}
+                    />
+                  ) : (
+                    <Text style={{marginRight: 10}}>{successMeasure}</Text>
+                  )}
+                  <TouchableOpacity
+                    onPress={() =>
+                      setEditingField(editingField === 'successMeasure' ? null : 'successMeasure')
+                    }
+                    style={styles.editButton}
+                  >
+                    <Text style={styles.editText}>
+                      {editingField === 'successMeasure' ? 'Save' : 'Edit'}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+          
+                <View style={[styles.reviewField,  editingField === 'date' && {flexDirection: 'column'}]}>
+                  <Text style={styles.label}>Target Date:</Text>
+                  {editingField === 'date' ? (
+                    <View style={styles.datePickerContainer}>
+                        <View style={{width: '28%'}}>
+                            <DropDownPicker
+                            open={dayOpen}
+                            setOpen={setDayOpen}
+                            value={day}
+                            setValue={setDay}
+                            items={days}
+                            placeholder="Day"
+                            style={styles.dropdown}
+                        />
+                        </View>
+                        <View style={{width: '34%'}}>
+                            <DropDownPicker
+                            open={monthOpen}
+                            setOpen={setMonthOpen}
+                            value={month}
+                            setValue={setMonth}
+                            items={months}
+                            placeholder="Month"
+                            style={styles.dropdown}
+                        />
+                        </View>
+                        <View style={{width: '33%'}}>
+                            <DropDownPicker
+                            open={yearOpen}
+                            setOpen={setYearOpen}
+                            value={year}
+                            setValue={setYear}
+                            items={years}
+                            placeholder="Year"
+                            style={styles.dropdown}
+                        />
+                        </View>
+                    </View>
+                  ) : (
+                    <Text style={{marginRight: 10}}>{`${day}/${month}/${year}`}</Text>
+                  )}
+                  <TouchableOpacity
+                    onPress={() => setEditingField(editingField === 'date' ? null : 'date')}
+                    style={styles.editButton}
+                  >
+                    <Text style={styles.editText}>
+                      {editingField === 'date' ? 'Save' : 'Edit'}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+          
+                <View style={[styles.reviewField, editingField === 'category' && {flexDirection: 'column'}]}>
+                  <Text style={styles.label}>Category:</Text>
+                  {editingField === 'category' ? (
+                    <View style={styles.categoryContainer}>
+                      {['Short term', 'Medium term', 'Long term'].map((cat) => (
+                        <TouchableOpacity
+                          key={cat}
+                          style={[
+                            styles.categoryButton,
+                            category === cat && styles.activeCategory,
+                          ]}
+                          onPress={() => setCategory(cat)}
+                        >
+                          <Text>{cat}</Text>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                  ) : (
+                    <Text style={{marginRight: 10}}>{category}</Text>
+                  )}
+                  <TouchableOpacity
+                    onPress={() =>
+                      setEditingField(editingField === 'category' ? null : 'category')
+                    }
+                    style={styles.editButton}
+                  >
+                    <Text style={styles.editText}>
+                      {editingField === 'category' ? 'Save' : 'Edit'}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+          
+                <TouchableOpacity
+                  style={[styles.submitButton]}
+                  onPress={handleSubmit}
+                >
+                  <Text style={styles.buttonText}>Submit</Text>
+                </TouchableOpacity>
+              </View>
+            );
+                    
       default:
         return null;
     }
   };
 
-  return <View style={styles.container}>{renderStep()}</View>;
-};
+  return (
+    <View style={styles.container}>
+      {renderStep()}
+    </View>
+  );
+  };
 
 const styles = StyleSheet.create({
   container: {
@@ -327,8 +490,9 @@ const styles = StyleSheet.create({
   },
   categoryContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     marginBottom: 20,
+    width: '100%'
   },
   categoryButton: {
     padding: 10,
@@ -340,6 +504,38 @@ const styles = StyleSheet.create({
     backgroundColor: '#4CAF50',
     borderColor: '#4CAF50',
   },
+  reviewField: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 15,
+    justifyContent: 'space-between',
+    width: '100%'
+  },
+  label: {
+    fontWeight: 'bold',
+    flex: 1,
+  },
+  editInput: {
+    flex: 2,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 8,
+    borderRadius: 5,
+    backgroundColor: '#fff',
+  },
+  editButton: {
+    padding: 5,
+    backgroundColor: '#ddd',
+    borderRadius: 5,
+  },
+  editText: {
+    color: '#007BFF',
+  },
+  datePickerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%'
+  },    
 });
 
 export default AddGoal;
