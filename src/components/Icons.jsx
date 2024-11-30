@@ -45,6 +45,7 @@ const Icons = ({ type }) => {
     break;
     case 'arrow':
         imageSource = require('../assets/common/arrow.png');
+        iconStyle.push(styles.pink);
     break;
     case 'save':
       imageSource = require('../assets/common/save.png');
@@ -82,6 +83,12 @@ const styles = StyleSheet.create({
     height: '100%',
     objectFit: 'cover',
     tintColor: '#8454ff',
+  },
+  pink: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    tintColor: '#e75da5',
   }
 });
 

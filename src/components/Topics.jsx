@@ -3,6 +3,7 @@ import { View, TouchableOpacity, Text, Image, ScrollView, StyleSheet, Dimensions
 import { useNavigation } from '@react-navigation/native';
 import easy from "../constants/easy";
 import peak from "../constants/peak";
+import Icons from './Icons';
 
 const { height } = Dimensions.get('window');
 
@@ -20,6 +21,10 @@ const Topics = ({ difficulty }) => {
     return (
         // <ImageBackground source={require('../assets/newDiz/back1.jpg')} style={{flex: 1}}>
         <View style={styles.container}>
+            <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
+                <Icons type={"back"} />
+            </TouchableOpacity>
+
             <Text style={styles.title}>Topics</Text>
 
             <ScrollView style={{width: '100%'}}>
@@ -62,6 +67,17 @@ const styles = StyleSheet.create({
       padding: 30,
       paddingTop: height * 0.07,
       paddingBottom: height * 0.12,
+      backgroundColor: '#cfe2f3'
+    },
+
+    back: {
+        width: 60,
+        height: 60,
+        padding: 10,
+        position: "absolute",
+        top: height * 0.04,
+        left: 10,
+        zIndex: 10,
     },
 
     title: {
@@ -69,7 +85,7 @@ const styles = StyleSheet.create({
       fontSize: 34,
       textAlign: "center",
       marginBottom: height * 0.04,
-      color: "#8454ff",
+      color: "#e75da5",
     },
 
     btnContainer: {
@@ -85,7 +101,7 @@ const styles = StyleSheet.create({
         height: height * 0.15,
         borderRadius: 12,
         borderWidth: 2,
-        borderColor: '#8454ff',
+        borderColor: '#9d7ff7',
         overflow: 'hidden',
         alignItems: 'center',
         justifyContent: 'center',
@@ -101,7 +117,7 @@ const styles = StyleSheet.create({
     btnText: {
         fontSize: 14,
         fontWeight: '700',
-        color: '#8454ff',
+        color: '#9d7ff7',
         textAlign: 'center'
     }
 });

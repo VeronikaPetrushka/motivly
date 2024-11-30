@@ -379,7 +379,7 @@ const ChampionQuiz = ({ quiz }) => {
                 <View style={styles.modalContent}>
                 <ScrollView style={styles.ScrollView}>
                     <Text style={styles.title}>{quiz.title}</Text>
-                    <Text style={[styles.modalText, {fontWeight: '700', marginBottom: 20}]}>{quiz.quote}</Text>
+                    <Text style={[styles.modalText, {fontWeight: '700', marginBottom: 20, color: '#f57bbb'}]}>{quiz.quote}</Text>
                     <Text style={styles.modalText}>{quiz.description}</Text>
                     </ScrollView>
                     <TouchableOpacity style={styles.closeButton} onPress={() => setModalVisible(false)}>
@@ -401,19 +401,20 @@ const styles = StyleSheet.create({
     paddingTop: height * 0.07,
     justifyContent: 'flex-start',
     alignItems: 'center',
+    backgroundColor: '#cfe2f3'
   },
   topic: {
     fontSize: 24,
     fontWeight: '800',
     marginBottom: 20,
     textAlign: 'center',
-    color: '#000',
+    color: '#e75da5',
   },
   timer: {
     fontSize: 20,
     fontWeight: '800',
     textAlign: 'center',
-    color: '#000',
+    color: '#fc198f',
   },
   questionContainer: {
     marginBottom: height * 0.02,
@@ -424,7 +425,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: height * 0.02,
     textAlign: 'center',
-    color: '#000',
+    color: '#6c1b45',
+    height: 50
   },
   optionsContainer: {
     marginTop: 10,
@@ -440,7 +442,7 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 16,
-    color: '#000',
+    color: '#fff',
     fontWeight: '700'
   },
   correctOption: {
@@ -460,12 +462,11 @@ const styles = StyleSheet.create({
   endMessageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
   },
   endMessage: {
-    fontSize: height * 0.024,
+    fontSize: 20,
     fontWeight: '600',
-    color: '#000',
+    color: '#6c1b45',
   },
   heart: {
     width: 35,
@@ -521,7 +522,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 20,
   },
   retryButton: {
     backgroundColor: '#8454ff',
@@ -540,14 +540,14 @@ const styles = StyleSheet.create({
   },
   openButton: {
     backgroundColor: '#8454ff',
-    padding: 15,
+    padding: 12,
     borderRadius: 10,
     alignItems: 'center',
     marginBottom: height * 0.01,
   },
   goBackSuccess: {
     backgroundColor: '#432887',
-    padding: 15,
+    padding: 12,
     borderRadius: 10,
     alignItems: 'center',
   },
@@ -555,14 +555,15 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 16,
     fontWeight: '900',
-    color: '#000',
+    color: '#fff',
   },
   finishText: {
-    fontSize: height * 0.022,
+    fontSize: 18,
     fontWeight: '400',
-    color: '#000',
+    color: '#c72379',
     textAlign: 'center',
-    marginBottom: height * 0.02
+    marginBottom: height * 0.03,
+    marginTop: height * -0.03
   },
   modalContainer: {
     flex: 1,
@@ -589,7 +590,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     marginBottom: 15,
     textAlign: 'center',
-    color: '#432887',
+    color: '#6c1b45',
     fontWeight: '800'
   },
   closeButton: {

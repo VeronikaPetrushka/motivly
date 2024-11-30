@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
     },
     bold: {
         fontWeight: 'bold',
+        color: '#5c0432'
     },
     closeButton: {
         padding: 10,

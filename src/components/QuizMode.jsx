@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     padding: 30,
     paddingTop: height * 0.07,
+    backgroundColor: '#cfe2f3'
   },
   back: {
     width: 60,
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
     fontSize: 34,
     textAlign: "center",
     marginBottom: height * 0.3,
-    color: "#FDF3E7",
+    color: "#e75da5",
   },
   btn: {
     padding: 20,
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
     width: "100%",
     borderWidth: 0.5,
     borderColor: "#fff",
-    backgroundColor: "#8454ff",
+    backgroundColor: "#9d7ff7",
     borderRadius: 12,
     marginBottom: 10,
     zIndex: 10,
@@ -175,7 +176,7 @@ const styles = StyleSheet.create({
   },
   proceedButton: {
     padding: 10,
-    backgroundColor: "#8454ff",
+    backgroundColor: "#e75da5",
     borderRadius: 10,
     flex: 1,
     alignItems: "center",

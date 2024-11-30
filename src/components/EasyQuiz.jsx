@@ -389,19 +389,20 @@ const styles = StyleSheet.create({
     paddingTop: height * 0.07,
     justifyContent: 'flex-start',
     alignItems: 'center',
+    backgroundColor: '#cfe2f3'
   },
   topic: {
     fontSize: 24,
     fontWeight: '800',
     marginBottom: 20,
     textAlign: 'center',
-    color: '#000',
+    color: '#e75da5',
   },
   timer: {
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#FF6347',
+    color: '#fc198f',
   },
   questionContainer: {
     marginBottom: height * 0.02,
@@ -412,7 +413,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: height * 0.01,
     textAlign: 'center',
-    color: '#000',
+    color: '#6c1b45',
+    height: 50
   },
   optionsContainer: {
     marginTop: 10,
@@ -451,7 +453,7 @@ const styles = StyleSheet.create({
   endMessage: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#fff',
+    color: '#6c1b45',
   },
   heart: {
     width: 35,
@@ -480,11 +482,11 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: height * 0.35,
+    height: height * 0.33,
     resizeMode: 'cover',
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: '#3C3C3C',
+    borderColor: '#6c1b45',
     marginBottom: height * 0.03,
   },
   closeButton: {
@@ -507,7 +509,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: height * 0.01,
     marginBottom: height * 0.02
   },
   retryButton: {
@@ -546,9 +547,9 @@ const styles = StyleSheet.create({
   finishText: {
     fontSize: 20,
     fontWeight: '400',
-    color: '#FFBE76',
+    color: '#c72379',
     textAlign: 'center',
-    marginBottom: height * 0.03
+    marginBottom: height * 0.06
   },
   modalContainer: {
     flex: 1,

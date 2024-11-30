@@ -78,7 +78,7 @@ const Settings = () => {
             {showResetConfirmation ? (
                 <>
                     <Text style={styles.confirmationText}>
-                    Are you sure you want to reset your account? This action will delete your profile, including your user name, uploaded photo, score, catalogue, crafts, articles, and collected places from pathfinder quiz !
+                    Are you sure you want to reset your account? This action will delete your profile, including your user name, uploaded photo, score, articles, pinned, goal guide along with your set goals!
                     </Text>
                     <TouchableOpacity style={styles.resetBtn} onPress={handleReset}>
                         <Text style={styles.btnText}>Reset</Text>
@@ -135,13 +135,14 @@ const styles = StyleSheet.create({
         paddingTop: height * 0.08,
         alignItems: 'center',
         justifyContent: 'flex-start',
+        backgroundColor: '#cfe2f3'
     },
     title: {
         fontWeight: 'bold',
         fontSize: 34,
         textAlign: 'center',
         marginBottom: height * 0.11,
-        color: '#FDF3E7',
+        color: '#6c1b45',
     },
     regulatorContainer: {
         flexDirection: 'row',
@@ -154,7 +155,7 @@ const styles = StyleSheet.create({
         fontSize: 22,
         textAlign: 'center',
         fontWeight: 'bold',
-        color: '#cab5ff'
+        color: '#c489ad'
     },
     toggleContainer: {
         padding: 7,
@@ -163,7 +164,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 1,
         borderRadius: 30,
-        borderColor: '#cab5ff',
+        borderColor: '#c489ad',
     },
     toggleContainerOff: {
         borderColor: '#d1d1d1',
@@ -183,7 +184,7 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     toggleOn: {
-        backgroundColor: '#cab5ff',
+        backgroundColor: '#c489ad',
         alignSelf: 'flex-end',
     },
     toggleOff: {
@@ -207,7 +208,7 @@ const styles = StyleSheet.create({
     },
     resetBtn: {
         width: '100%',
-        backgroundColor: '#8454ff',
+        backgroundColor: '#e75da5',
         borderRadius: 15,
         padding: 15,
         alignItems: 'center',
@@ -219,11 +220,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: height * 0.1,
         marginTop: height * 0.15,
-        color: '#FDF3E7'
+        color: '#5e0232'
     },
     cancelReset: {
         width: '100%',
-        borderColor: '#FDF3E7',
+        borderColor: '#e75da5',
         borderWidth: 2,
         borderRadius: 15,
         padding: 15,
@@ -234,7 +235,7 @@ const styles = StyleSheet.create({
     cancelBtnText: {
         fontSize: 19,
         fontWeight: '500',
-        color: '#FDF3E7',
+        color: '#e75da5',
     }
 });
 

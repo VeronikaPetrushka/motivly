@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import game from '../constants/game';
+
+const { height } = Dimensions.get('window');
 
 const Game = () => {
     const [level, setLevel] = useState(null);
@@ -98,26 +100,29 @@ const Game = () => {
         );
 
         return (
-            <View style={styles.wordsContainer}>
-                {columns.map((columnWords, columnIndex) => (
-                    <View key={columnIndex} style={styles.column}>
-                        {columnWords.map((item, wordIndex) => (
-                            <TouchableOpacity
-                                key={wordIndex}
-                                style={[
-                                    styles.wordButton,
-                                    pressedPositive.includes(item.word) && styles.greenButton,
-                                    pressedNegative.includes(item.word) && styles.redButton,
-                                    pressedBonus.includes(item.word) && styles.yellowButton,
-                                ]}
-                                onPress={() => handlePress(item.word, item.type)}
-                                disabled={pressedWords.includes(item.word)}
-                            >
-                                <Text>{item.word}</Text>
-                            </TouchableOpacity>
-                        ))}
-                    </View>
-                ))}
+            <View style={{width: '100%'}}>
+                <Text style={styles.level}>Level {level}</Text>
+                <View style={styles.wordsContainer}>
+                    {columns.map((columnWords, columnIndex) => (
+                        <View key={columnIndex} style={styles.column}>
+                            {columnWords.map((item, wordIndex) => (
+                                <TouchableOpacity
+                                    key={wordIndex}
+                                    style={[
+                                        styles.wordButton,
+                                        pressedPositive.includes(item.word) && styles.greenButton,
+                                        pressedNegative.includes(item.word) && styles.redButton,
+                                        pressedBonus.includes(item.word) && styles.yellowButton,
+                                    ]}
+                                    onPress={() => handlePress(item.word, item.type)}
+                                    disabled={pressedWords.includes(item.word)}
+                                >
+                                    <Text style={styles.word}>{item.word}</Text>
+                                </TouchableOpacity>
+                            ))}
+                        </View>
+                    ))}
+                </View>
             </View>
         );
     };
@@ -133,62 +138,64 @@ const Game = () => {
     return (
         <View style={styles.container}>
             {!gameCompleted ? (
-                <>
-                    <Text>Your task: Enhance concentration and positive thinking by assembling a goal from pieces while avoiding distractions.</Text>
+                <View style={{width: '100%', padding: 20}}>
                     {level === null ? (
-                        <>
+                        <View style={{}}>
+                            <Text style={styles.task}>Your task: Enhance concentration and positive thinking by assembling a goal from pieces while avoiding distractions.</Text>
                             <TouchableOpacity onPress={() => startLevel(1)} style={styles.levelButton}>
-                                <Text>Level 1</Text>
+                                <Text style={styles.levelButtonText}>Level 1</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => startLevel(2)} style={styles.levelButton}>
-                                <Text>Level 2</Text>
+                                <Text style={styles.levelButtonText}>Level 2</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => startLevel(3)} style={styles.levelButton}>
-                                <Text>Level 3</Text>
+                                <Text style={styles.levelButtonText}>Level 3</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => startLevel(4)} style={styles.levelButton}>
-                                <Text>Level 4</Text>
+                                <Text style={styles.levelButtonText}>Level 4</Text>
                             </TouchableOpacity>
-                        </>
+                        </View>
                     ) : (
-                        <>
+                        <View>
                             {renderWords()}
-                        </>
+                        </View>
                     )}
-                </>
+                </View>
             ) : (
-                <>
-                    {pressedPositive && (
-                        <View>
-                            <Text>Positive Phrases:</Text>
-                            {pressedPositive.map((word, index) => {
-                                const phrase = game.positive.find((item) => item.word === word)?.phrase || '';
-                                return <Text key={index}>{phrase}</Text>;
-                            })}
-                        </View>
-                    )}
-                    {pressedNegative && (
-                        <View>
-                            <Text>Negative Phrases:</Text>
-                            {pressedNegative.map((word, index) => {
-                                const phrase = game.negative.find((item) => item.word === word)?.phrase || '';
-                                return <Text key={index}>{phrase}</Text>;
-                            })}
-                        </View>
-                    )}
-                    {pressedBonus && (
-                        <View>
-                            <Text>Bonus Phrases:</Text>
-                            {pressedBonus.map((word, index) => {
-                                const phrase = game.bonus.find((item) => item.word === word)?.phrase || '';
-                                return <Text key={index}>{phrase}</Text>;
-                            })}
-                        </View>
-                    )}
+                <View style={{width: '100%', padding: 20}}>
+                    <ScrollView style={{width: '100%'}}>
+                        {pressedPositive && (
+                            <View style={[styles.phrasesContainer, pressedPositive && {backgroundColor: 'lightgreen'}]}>
+                                <Text style={[styles.phraseTitle, {color: '#274e13'}]}>Positive Phrases:</Text>
+                                {pressedPositive.map((word, index) => {
+                                    const phrase = game.positive.find((item) => item.word === word)?.phrase || '';
+                                    return <Text key={index} style={[styles.phrase, {color: '#38761d'}]}>- {phrase}</Text>;
+                                })}
+                            </View>
+                        )}
+                        {pressedNegative && (
+                            <View style={[styles.phrasesContainer, pressedPositive && {backgroundColor: 'lightcoral'}]}>
+                                <Text style={[styles.phraseTitle, {color: '#990000'}]}>Negative Phrases:</Text>
+                                {pressedNegative.map((word, index) => {
+                                    const phrase = game.negative.find((item) => item.word === word)?.phrase || '';
+                                    return <Text key={index} style={[styles.phrase, {color: '#ba0303'}]}>- {phrase}</Text>;
+                                })}
+                            </View>
+                        )}
+                        {pressedBonus && (
+                            <View style={[styles.phrasesContainer, pressedPositive && {backgroundColor: 'lightyellow'}]}>
+                                <Text style={[styles.phraseTitle, {color: '#bf9000'}]}>Bonus Phrases:</Text>
+                                {pressedBonus.map((word, index) => {
+                                    const phrase = game.bonus.find((item) => item.word === word)?.phrase || '';
+                                    return <Text key={index} style={[styles.phrase, {color: '#f1c232'}]}>- {phrase}</Text>;
+                                })}
+                            </View>
+                        )}
+                    </ScrollView>
                     <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-                        <Text>Go Back</Text>
+                        <Text style={styles.backButtonText}>Go Back</Text>
                     </TouchableOpacity>
-                </>
+                </View>
             )}
         </View>
     );
@@ -196,13 +203,41 @@ const Game = () => {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20,
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        padding: 0,
+        paddingTop: height * 0.07,
+        backgroundColor: '#cfe2f3'
+    },
+    task: {
+        color: '#000',
+        fontSize: 22,
+        fontWeight: '500',
+        textAlign: 'center',
+        marginBottom: height * 0.18,
+        marginTop: height * 0.05
     },
     levelButton: {
-        margin: 10,
+        margin: 5,
         padding: 10,
-        backgroundColor: 'lightblue',
-        borderRadius: 5,
+        backgroundColor: '#6c1b45',
+        borderRadius: 8,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    levelButtonText: {
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: '800'
+    },
+    level: {
+        color: '#6c1b45',
+        fontSize: 28,
+        fontWeight: '900',
+        textAlign: 'center',
+        marginBottom: height * 0.05
     },
     wordsContainer: {
         flexDirection: 'row',
@@ -210,14 +245,19 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     column: {
-        flex: 1,
         alignItems: 'center',
     },
     wordButton: {
-        margin: 5,
+        marginHorizontal: 3,
+        marginVertical: 10,
         padding: 10,
-        backgroundColor: 'lightgray',
+        backgroundColor: '#fff',
         borderRadius: 5,
+    },
+    word: {
+        color: '#000',
+        fontSize: 14,
+        fontWeight: '500',
     },
     greenButton: {
         backgroundColor: 'lightgreen',
@@ -228,13 +268,36 @@ const styles = StyleSheet.create({
     yellowButton: {
         backgroundColor: 'lightyellow',
     },
+    phrasesContainer: {
+        width: '100%',
+        padding: 10, 
+        borderRadius: 10, 
+        marginBottom: height * 0.015
+    },
+    phraseTitle: {
+        color: '#000',
+        fontSize: 18,
+        fontWeight: '800',
+        marginBottom: height * 0.01
+    },
+    phrase: {
+        color: '#000',
+        fontSize: 16,
+        fontWeight: '500',
+        marginBottom: height * 0.01 
+    },
     backButton: {
-        marginTop: 20,
+        marginTop: height * 0.02,
         padding: 10,
-        backgroundColor: 'orange',
-        borderRadius: 5,
+        backgroundColor: '#fc9bd7',
+        borderRadius: 12,
         alignItems: 'center',
     },
+    backButtonText: {
+        color: '#fff',
+        fontSize: 17,
+        fontWeight: '800',
+    }
 });
 
 export default Game;

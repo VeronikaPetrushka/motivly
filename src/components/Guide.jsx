@@ -22,7 +22,7 @@ const Guide = () => {
                         <Icons type={"back"} />
                     </TouchableOpacity>
 
-                    <ScrollView>
+                    <ScrollView style={{marginTop: height * 0.07}}>
                         <Text style={styles.selectedTitle}>{selected.title}</Text>
                         <Text style={styles.selectedDescription}>{selected.description}</Text>
                         
@@ -68,13 +68,14 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         padding: 30,
         paddingTop: height * 0.07,
+        backgroundColor: '#cfe2f3'
     },
     title: {
         fontWeight: "800",
         fontSize: 26,
         textAlign: "center",
         marginBottom: height * 0.03,
-        color: "#000",
+        color: "#e75da5",
     },
     guideBtn: {
         width: '100%',
@@ -82,10 +83,11 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: height * 0.02,
         borderWidth: 1,
+        borderColor: '#6c1b45'
     },
     guideBtnText: {
         fontSize: 18,
-        color: '#000',
+        color: '#6c1b45',
     },
     back: {
         width: 55,
@@ -99,18 +101,19 @@ const styles = StyleSheet.create({
     detailsContainer: {
         width: '100%',
         alignItems: 'flex-start',
-        padding: 20,
     },
     selectedTitle: {
         fontSize: 22,
         fontWeight: 'bold',
         marginBottom: 10,
-        color: "#000",
+        color: "#6c1b45",
+        textAlign: 'center'
     },
     selectedDescription: {
         fontSize: 16,
         marginBottom: 20,
         color: "#333",
+        textAlign: 'justify'
     },
     pointContainer: {
         marginBottom: 15,
@@ -118,11 +121,12 @@ const styles = StyleSheet.create({
     pointTitle: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: "#000",
+        color: "#e75da5",
     },
     pointText: {
         fontSize: 16,
         color: "#333",
+        textAlign: 'justify'
     },
     listContainer: {
         width: '100%',

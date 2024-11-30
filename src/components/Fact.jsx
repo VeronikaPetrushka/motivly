@@ -83,13 +83,13 @@ const Fact = ({ fact }) => {
                 {item.text && <Text style={styles.description}>{item.text}</Text>}
 
                 {item.list && (
-                  <FlatList
-                    data={item.list}
-                    keyExtractor={(listItem, listIndex) => listIndex.toString()}
-                    renderItem={({ item: listItem }) => (
-                      <Text style={styles.listItem}>- {listItem}</Text>
-                    )}
-                  />
+                  <View style={styles.listContainer}>
+                  {item.list.map((listItem, listIndex) => (
+                    <Text key={listIndex} style={styles.listItem}>
+                      - {listItem}
+                    </Text>
+                  ))}
+                  </View>
                 )}
               </View>
             ))}
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: height * 0.12,
     backgroundColor: "#f9f9f9",
-    borderRadius: 10,
+    backgroundColor: '#cfe2f3'
   },
   back: {
     width: 60,
@@ -135,18 +135,21 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: 15,
+    color: '#6c1b45',
+    marginTop: height * 0.03,
+    textAlign: 'center'
   },
   description: {
     fontSize: 16,
-    marginBottom: 10,
+    marginBottom: 25,
     color: "#555",
   },
   subTitle: {
     fontSize: 20,
     fontWeight: "600",
     marginBottom: 10,
-    color: "#333",
+    color: "#e75da5",
     textAlign: "center",
   },
   pointsContainer: {
@@ -159,7 +162,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 5,
-    color: "#444",
+    color: "#be6392",
   },
   listItem: {
     fontSize: 16,
@@ -167,12 +170,12 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   conclusion: {
-    marginTop: 15,
     fontSize: 16,
     color: "#333",
   },
   conclusionBold: {
     fontWeight: "bold",
+    color: '#e75da5'
   },
 });
 

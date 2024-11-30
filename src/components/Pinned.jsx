@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     paddingTop: height * 0.07,
-    backgroundColor: "#f9f9f9",
+    backgroundColor: '#cfe2f3'
   },
   back: {
     width: 60,
@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
+    color: '#e75da5'
   },
   factItem: {
     backgroundColor: "#fff",
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#333",
+    color: "#6c1b45",
     marginBottom: 10,
   },
   description: {
@@ -137,9 +138,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   readMoreButton: {
-    backgroundColor: "#007BFF",
-    borderRadius: 5,
+    backgroundColor: "#ef90ff",
+    borderRadius: 10,
     padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 250,
   },
   removeButton: {
     width: 40,
@@ -147,7 +151,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#fff",
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: "bold",
   },
   emptyText: {

@@ -194,9 +194,10 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: height * 0.07,
     paddingBottom: height * 0.12,
+    backgroundColor: '#cfe2f3'
   },
   scoreText: {
-    color: '#FF6347',
+    color: '#e75da5',
     fontSize: 26,
     fontWeight: '900',
     marginBottom: height * 0.02,
@@ -224,12 +225,12 @@ const styles = StyleSheet.create({
   topicTitle: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#432887',
+    color: '#5c0432',
     textAlign: 'center',
     marginBottom: 10,
   },
   buyButton: {
-    backgroundColor: '#FF6347',
+    backgroundColor: '#e75da5',
     paddingVertical: height * 0.01,
     paddingHorizontal: 50,
     borderRadius: 10,
@@ -257,8 +258,8 @@ const styles = StyleSheet.create({
   centerBonusButton: {
     backgroundColor: '#28A745',
     paddingVertical: 10,
-    paddingHorizontal: 30,
-    borderRadius: 10,
+    paddingHorizontal: 20,
+    borderRadius: 12,
   },
   centerBonusButtonText: {
     color: '#fff',
@@ -309,7 +310,7 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     marginTop: 20,
-    backgroundColor: '#FF6347',
+    backgroundColor: '#e75da5',
     paddingVertical: 10,
     paddingHorizontal: 30,
     borderRadius: 10,

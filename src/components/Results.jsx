@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         padding: 20,
         paddingTop: height * 0.07,
+        backgroundColor: '#cfe2f3'
     },
     back: {
       width: 60,
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
   totalScore: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#FF6347',
+    color: '#e75da5',
     marginBottom: height * 0.03,
   },
   userContainer: {
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#0A3D62',
+    color: '#6c1b45',
   },
   userScore: {
     fontSize: 16,
@@ -136,7 +137,7 @@ const styles = StyleSheet.create({
   },
   shareButton: {
     width: 200,
-    backgroundColor: '#1E90FF',
+    backgroundColor: '#e75da5',
     borderRadius: 25,
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -146,7 +147,7 @@ const styles = StyleSheet.create({
   },
   shareButtonText: {
     color: '#fff',
-    fontWeight: '600',
+    fontWeight: '800',
     fontSize: 16,
   },
 });

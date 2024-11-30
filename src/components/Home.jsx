@@ -1,5 +1,3 @@
-// daily modal timer
-
 import React, { useState, useEffect, useCallback } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Image, ImageBackground } from "react-native"
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,10 +11,11 @@ const { height } = Dimensions.get('window');
 const Home = () => {
     const navigation = useNavigation();
     const [aboutModalVisible, setAboutModalVisible] = useState(false);
-    const [dailyModalVisible, setDailyModalVisible] = useState(true);
+    const [dailyModalVisible, setDailyModalVisible] = useState(false);
     const [userProfileModalVisible, setUserProfileModalVisible] = useState(false);
     const [uploadedImage, setUploadedImage] = useState({ uri: Image.resolveAssetSource(require('../assets/avatar/user.png')).uri });
     const [userName, setUserName] = useState('');  
+    const [buttonDisabled, setButtonDisabled] = useState(false);
     const [timeLeft, setTimeLeft] = useState('00:00:00');
     const [intervalId, setIntervalId] = useState(null);
 
@@ -47,54 +46,72 @@ const Home = () => {
         useCallback(() => {
             loadAvatar();
             loadName();
+            loadTimer();
         }, [])
     );
 
     const loadTimer = async () => {
         try {
-            const lastClaimTime = await AsyncStorage.getItem('lastClaimTime');
-            const currentTime = new Date().getTime();
-            if (lastClaimTime) {
-                const timeDifference = currentTime - parseInt(lastClaimTime);
-                const timeRemaining = 86400000 - timeDifference;
-                if (timeRemaining > 0) {
-                    setTimeLeft(timeRemaining);
-                    startCountdown(timeRemaining);
-                } else {
-                    setTimeLeft('00:00:00');
-                }
+          const lastClaimTime = await AsyncStorage.getItem('lastClaimTime');
+          const currentTime = new Date().getTime();
+          if (lastClaimTime) {
+            const timeDifference = currentTime - parseInt(lastClaimTime);
+            const timeRemaining = 86400000 - timeDifference;
+            if (timeRemaining > 0) {
+              setButtonDisabled(true);
+              setTimeLeft(formatTime(timeRemaining));
+              startCountdown(timeRemaining);
             } else {
-                setTimeLeft('00:00:00');
+              setButtonDisabled(false);
+              setTimeLeft('00:00:00');
             }
+          } else {
+            setButtonDisabled(false);
+            setTimeLeft('00:00:00');
+          }
         } catch (error) {
-            console.error('Error loading timer:', error);
+          console.error('Error loading timer:', error);
         }
-    };
+      };
     
-    const startCountdown = (timeRemaining) => {
+      const startCountdown = (timeRemaining) => {
         if (intervalId) {
-            clearInterval(intervalId);
+          clearInterval(intervalId);
         }
     
         const newIntervalId = setInterval(() => {
-            if (timeRemaining <= 0) {
-                clearInterval(newIntervalId);
-                setTimeLeft('00:00:00');
-            } else {
-                setTimeLeft(timeRemaining);
-                timeRemaining -= 1000;
-            }
+          if (timeRemaining <= 0) {
+            clearInterval(newIntervalId);
+            setButtonDisabled(false);
+            setTimeLeft('00:00:00');
+          } else {
+            setTimeLeft(formatTime(timeRemaining));
+            timeRemaining -= 1000;
+          }
         }, 1000);
     
         setIntervalId(newIntervalId);
-    };
+      };
     
-      const handleDailyClose = async () => {
+      const formatTime = (milliseconds) => {
+        const hours = Math.floor(milliseconds / 3600000);
+        const minutes = Math.floor((milliseconds % 3600000) / 60000);
+        const seconds = Math.floor((milliseconds % 60000) / 1000);
+        return `${padTime(hours)}:${padTime(minutes)}:${padTime(seconds)}`;
+      };
     
-        setDailyModalVisible(false);
+      const padTime = (time) => {
+        return time < 10 ? `0${time}` : time;
+      };
+    
+      const handleBonusPress = async () => {
+        if (buttonDisabled) return;
+    
+        setDailyModalVisible(true);
         const currentTime = new Date().getTime();
         await AsyncStorage.setItem('lastClaimTime', currentTime.toString());
     
+        setButtonDisabled(true);
         loadTimer();
       };
 
@@ -128,21 +145,30 @@ const Home = () => {
                     </View>
             </TouchableOpacity>
 
-            {/* <Image source={require('../assets/images/home.png')} style={styles.image} /> */}
+            <Image source={require('../assets/decor/1.png')} style={styles.image} />
 
-
-            <View style={styles.btnContainer}>
-
-            <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('QuizModeScreen')}>
+            <TouchableOpacity style={[styles.btn, {width: '100%', marginBottom: height * 0.05}]} onPress={() => navigation.navigate('QuizModeScreen')}>
                 <Text style={styles.btnTxt}>Unleash your potential</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('ResultsScreen')}>
-                <Text style={styles.btnTxt}>Results</Text>
+            <View style={styles.btnContainer}>
+
+            <TouchableOpacity
+                style={[styles.btn, buttonDisabled && {opacity: 0.6}]}
+                onPress={handleBonusPress}
+                disabled={buttonDisabled}
+                >
+                <Text style={styles.btnTxt}>
+                    {buttonDisabled ? `${timeLeft}` : 'Daily bonus'}
+                </Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('PinnedScreen')}>
                 <Text style={styles.btnTxt}>Pinned</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('ResultsScreen')}>
+                <Text style={styles.btnTxt}>Results</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.btn} onPress={() => setAboutModalVisible(true)}>
@@ -151,7 +177,7 @@ const Home = () => {
 
             </View>
 
-            <DailyModal visible={dailyModalVisible} onClose={handleDailyClose} />
+            <DailyModal visible={dailyModalVisible} onClose={() => setDailyModalVisible(false)} />
             <UserProfile visible={userProfileModalVisible} onClose={closeUserProfileModal}/>
             <AboutModal visible={aboutModalVisible} onClose={() => setAboutModalVisible(false)}/>
         </View>
@@ -167,6 +193,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         padding: 30,
         paddingTop: height * 0.07,
+        backgroundColor: '#cfe2f3'
     },
 
     userContainer: {
@@ -177,7 +204,7 @@ const styles = StyleSheet.create({
         // borderRadius: 15,
         // backgroundColor: 'rgba(60, 60, 60, 0.55)',
         zIndex: 10,
-        marginBottom: height * 0.05
+        marginBottom: height * 0.03
     },
 
     imageContainer: {
@@ -209,7 +236,7 @@ const styles = StyleSheet.create({
     name: {
         fontSize: 22,
         fontWeight: '600',
-        color: '#3C3C3C',
+        color: '#5c0432',
         textAlign: 'center'
     },
 
@@ -234,7 +261,9 @@ const styles = StyleSheet.create({
     btnContainer: {
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        flexWrap: 'wrap'
     },
 
     btn: {
@@ -242,10 +271,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         alignItems: 'center',
         justifyContent: 'center',
-        width: '100%',
+        width: '47%',
         borderWidth: 0.5,
         borderColor: '#fff',
-        backgroundColor: '#8454ff',
+        backgroundColor: '#9d7ff7',
         borderRadius: 12,
         marginBottom: 10,
         zIndex: 10

@@ -11,6 +11,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import DropDownPicker from 'react-native-dropdown-picker';
+import Icons from './Icons';
 
 const { height } = Dimensions.get('window');
 
@@ -28,7 +29,6 @@ const AddGoal = () => {
   const [dayOpen, setDayOpen] = useState(false);
   const [monthOpen, setMonthOpen] = useState(false);
   const [yearOpen, setYearOpen] = useState(false);
-  const [editStep, setEditStep] = useState(null);
   const [editingField, setEditingField] = useState(null);
 
   const days = Array.from({ length: 31 }, (_, i) => ({
@@ -315,10 +315,10 @@ const AddGoal = () => {
                 </View>
           
                 <View style={styles.reviewField}>
-                  <Text style={styles.label}>Measure of Success:</Text>
+                  <Text style={[styles.label, editingField === 'successMeasure' && {width: 77}]}>Measure of Success:</Text>
                   {editingField === 'successMeasure' ? (
                     <TextInput
-                      style={styles.editInput}
+                      style={[styles.editInput, editingField === 'successMeasure' && {width: '57%'}]}
                       value={successMeasure}
                       onChangeText={setSuccessMeasure}
                     />
@@ -389,7 +389,7 @@ const AddGoal = () => {
                 </View>
           
                 <View style={[styles.reviewField, editingField === 'category' && {flexDirection: 'column'}]}>
-                  <Text style={styles.label}>Category:</Text>
+                  <Text style={[styles.label, editingField === 'category' && {marginBottom: 20}]}>Category:</Text>
                   {editingField === 'category' ? (
                     <View style={styles.categoryContainer}>
                       {['Short term', 'Medium term', 'Long term'].map((cat) => (
@@ -436,6 +436,9 @@ const AddGoal = () => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity style={styles.icon} onPress={() => navigation.goBack()}>
+          <Icons type={"back"} />
+      </TouchableOpacity>
       {renderStep()}
     </View>
   );
@@ -446,17 +449,28 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     justifyContent: 'center',
+    backgroundColor: '#cfe2f3'
   },
+  icon: {
+    width: 60,
+    height: 60,
+    padding: 10,
+    position: "absolute",
+    top: height * 0.04,
+    left: 10,
+    zIndex: 10,
+},
   title: {
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#6c1b45',
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#6c1b45',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     marginBottom: 20,
   },
   dropdownContainer: {
@@ -466,27 +480,28 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#6c1b45',
   },
   nextButton: {
-    backgroundColor: '#ccc',
-    padding: 15,
+    backgroundColor: '#e75da5',
+    padding: 12,
     alignItems: 'center',
-    borderRadius: 5,
+    borderRadius: 10,
   },
   activeButton: {
     backgroundColor: '#4CAF50',
   },
   submitButton: {
-    backgroundColor: '#FF5722',
-    padding: 15,
+    backgroundColor: '#e75da5',
+    padding: 12,
     alignItems: 'center',
-    borderRadius: 5,
+    borderRadius: 10,
     marginTop: 20,
   },
   buttonText: {
     color: '#fff',
     fontWeight: 'bold',
+    fontSize: 17
   },
   categoryContainer: {
     flexDirection: 'row',
@@ -497,7 +512,7 @@ const styles = StyleSheet.create({
   categoryButton: {
     padding: 10,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#6c1b45',
     borderRadius: 5,
   },
   activeCategory: {
@@ -509,32 +524,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 15,
     justifyContent: 'space-between',
-    width: '100%'
+    width: '100%',
   },
   label: {
     fontWeight: 'bold',
-    flex: 1,
   },
   editInput: {
-    flex: 2,
+    width: '65%',
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#6c1b45',
     padding: 8,
-    borderRadius: 5,
+    borderRadius: 10,
     backgroundColor: '#fff',
   },
   editButton: {
     padding: 5,
-    backgroundColor: '#ddd',
+    backgroundColor: '#f99ed6',
     borderRadius: 5,
   },
   editText: {
-    color: '#007BFF',
+    color: '#fff',
   },
   datePickerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '100%'
+    width: '100%',
+    marginVertical: height * 0.02
   },    
 });
 

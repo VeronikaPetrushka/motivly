@@ -114,7 +114,7 @@ const Goal = () => {
                             <TouchableOpacity
                                 style={[
                                     styles.toolBtn,
-                                    { backgroundColor: item.completed ? '#FFC107' : 'blue' }
+                                    { backgroundColor: item.completed ? '#acdf54' : '#ffb3fd' }
                                 ]}
                                 onPress={async () => {
                                     const updatedGoals = goals.map((goal) =>
@@ -165,7 +165,8 @@ const Goal = () => {
             <TouchableOpacity
                 style={[
                     styles.guideBtn,
-                    { backgroundColor: isPurchased ? '#4CAF50' : '#d3d3d3' }
+                    { backgroundColor: '#e75da5'},
+                    !isPurchased && {opacity: 0.35}
                 ]}
                 onPress={() => navigation.navigate('GuideScreen')}
                 disabled={!isPurchased}
@@ -237,7 +238,7 @@ const Goal = () => {
                         <Text style={styles.modalText}>Are you sure you want to delete this goal?</Text>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
                             <TouchableOpacity
-                                style={[styles.modalCloseBtn, { backgroundColor: 'red' }]}
+                                style={[styles.modalCloseBtn, { backgroundColor: '#930c5f' }]}
                                 onPress={deleteGoal}
                             >
                                 <Text style={styles.modalCloseBtnText}>Delete</Text>
@@ -265,14 +266,15 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         padding: 30,
         paddingTop: height * 0.07,
-        paddingBottom: height * 0.12
+        paddingBottom: height * 0.13,
+        backgroundColor: '#cfe2f3'
     },
     title: {
         fontWeight: "800",
         fontSize: 26,
         textAlign: "center",
         marginBottom: height * 0.02,
-        color: "#000",
+        color: "#6c1b45",
     },
     list: {
         alignItems: 'center',
@@ -288,6 +290,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 15,
         borderWidth: 1,
+        borderColor: '#6c1b45'
     },
     goalTitle: {
         fontSize: 20,
@@ -299,10 +302,10 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     detailsBtn: {
-        backgroundColor: '#4CAF50',
+        backgroundColor: '#e75da5',
         padding: 5,
         borderRadius: 10,
-        width: 200,
+        width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: 10
@@ -312,7 +315,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     toolBtn: {
-        backgroundColor: 'blue',
+        backgroundColor: '#da71c5',
         padding: 5,
         borderRadius: 10,
         alignItems: 'center',
@@ -333,12 +336,12 @@ const styles = StyleSheet.create({
     dot: {
         width: 10,
         height: 10,
-        borderRadius: 5,
-        backgroundColor: '#d3d3d3',
+        borderRadius: 30,
+        backgroundColor: '#bf78ad',
         marginHorizontal: 3,
     },
     activeDot: {
-        backgroundColor: '#4CAF50',
+        backgroundColor: '#93056f',
         width: 15,
         height: 15,
     },
@@ -350,16 +353,17 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: height * 0.03
+        marginBottom: height * 0.055,
+        borderColor: '#93056f'
     },
     addBtnText: {
         fontWeight: '600',
         fontSize: 30,
+        color: '#93056f'
     },
     guideBtn: {
         padding: 12,
         borderRadius: 10,
-        marginTop: 20,
         width: 200,
         alignItems: 'center',
         justifyContent: 'center'
@@ -370,7 +374,7 @@ const styles = StyleSheet.create({
         color: '#fff'
     },
     buyBtn: {
-        backgroundColor: '#FF5722',
+        backgroundColor: '#e75da5',
         padding: 12,
         borderRadius: 10,
         marginTop: 10,
@@ -382,7 +386,7 @@ const styles = StyleSheet.create({
     buyBtnText: {
         fontWeight: '800',
         fontSize: 16,
-        color: '#fff'
+        color: '#fff',
     },
     modalContainer: {
         flex: 1,
@@ -400,11 +404,15 @@ const styles = StyleSheet.create({
     modalText: {
         fontSize: 18,
         marginBottom: 20,
+        textAlign: 'center'
     },
     modalCloseBtn: {
         backgroundColor: '#4CAF50',
-        padding: 10,
-        borderRadius: 5,
+        padding: 7,
+        borderRadius: 10,
+        width: '47%',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     modalCloseBtnText: {
         color: '#fff',

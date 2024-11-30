@@ -20,7 +20,7 @@ const Article = ({title, description, article, image}) => {
                 <ScrollView style={{ width: "100%" }}>
                     <Text style={[styles.story, {marginBottom: height * 0.02}]}>{description}</Text>
                     <Text style={styles.story}>{article}</Text>
-                    <View style={{ height: 120 }} />
+                    <View style={{ height: 50 }} />
                 </ScrollView>
             </View>
         </View>
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "flex-start",
         paddingBottom: height * 0.2,
+        backgroundColor: '#cfe2f3'
     },
 
     image: {
@@ -51,13 +52,13 @@ const styles = StyleSheet.create({
         fontSize: 26,
         textAlign: "center",
         marginBottom: height * 0.03,
-        color: "#000",
+        color: "#5c0432",
     },
 
     textContainer: {
         width: "100%",
         paddingHorizontal: 20,
-        paddingBottom: height * 0.4,
+        paddingBottom: height * 0.34,
     },
 
     story: {
