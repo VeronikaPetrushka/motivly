@@ -277,7 +277,7 @@ const AddGoal = () => {
                       onChangeText={setTitle}
                     />
                   ) : (
-                    <Text style={{marginRight: 10}}>{title}</Text>
+                    <Text style={[styles.ellipsisText, {width: 280}]} numberOfLines={1}>{title}</Text>
                   )}
                   <TouchableOpacity
                     onPress={() =>
@@ -300,7 +300,7 @@ const AddGoal = () => {
                       onChangeText={setGoalInput}
                     />
                   ) : (
-                    <Text style={{marginRight: 10}}>{goalInput}</Text>
+                    <Text style={[styles.ellipsisText, {width: 280}]} numberOfLines={1}>{goalInput}</Text>
                   )}
                   <TouchableOpacity
                     onPress={() =>
@@ -323,7 +323,7 @@ const AddGoal = () => {
                       onChangeText={setSuccessMeasure}
                     />
                   ) : (
-                    <Text style={{marginRight: 10}}>{successMeasure}</Text>
+                    <Text style={styles.ellipsisText} numberOfLines={1}>{successMeasure}</Text>
                   )}
                   <TouchableOpacity
                     onPress={() =>
@@ -376,7 +376,7 @@ const AddGoal = () => {
                         </View>
                     </View>
                   ) : (
-                    <Text style={{marginRight: 10}}>{`${day}/${month}/${year}`}</Text>
+                    <Text style={{width: 230, textAlign: 'right'}}>{`${day}/${month}/${year}`}</Text>
                   )}
                   <TouchableOpacity
                     onPress={() => setEditingField(editingField === 'date' ? null : 'date')}
@@ -406,7 +406,7 @@ const AddGoal = () => {
                       ))}
                     </View>
                   ) : (
-                    <Text style={{marginRight: 10}}>{category}</Text>
+                    <Text style={{width: 250, textAlign: 'right'}}>{category}</Text>
                   )}
                   <TouchableOpacity
                     onPress={() =>
@@ -528,6 +528,13 @@ const styles = StyleSheet.create({
   },
   label: {
     fontWeight: 'bold',
+  },
+  ellipsisText: {
+    width: 170,           
+    overflow: 'hidden',   
+    textOverflow: 'ellipsis', 
+    whiteSpace: 'nowrap',
+    textAlign: 'right'
   },
   editInput: {
     width: '65%',

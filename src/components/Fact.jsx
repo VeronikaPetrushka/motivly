@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  FlatList,
   Dimensions,
   TouchableOpacity,
   ScrollView,
@@ -109,9 +108,9 @@ const Fact = ({ fact }) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 20,
     paddingTop: height * 0.12,
-    backgroundColor: "#f9f9f9",
     backgroundColor: '#cfe2f3'
   },
   back: {
@@ -119,7 +118,7 @@ const styles = StyleSheet.create({
     height: 60,
     padding: 10,
     position: "absolute",
-    top: height * -0.09,
+    top: height * -0.07,
     left: 0,
     zIndex: 10,
   },
@@ -128,7 +127,7 @@ const styles = StyleSheet.create({
     height: 60,
     padding: 10,
     position: "absolute",
-    top: height * -0.09,
+    top: height * -0.07,
     right: 0,
     zIndex: 10,
   },
