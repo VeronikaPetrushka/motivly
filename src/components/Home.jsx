@@ -141,7 +141,7 @@ const Home = () => {
                     />
                 </View>
                     <View style={styles.nameBox}>
-                        <Text style={styles.name}>Hi, {userName || "User"}</Text>
+                        <Text style={styles.name}>Hi, {userName || "user"}</Text>
                     </View>
             </TouchableOpacity>
 

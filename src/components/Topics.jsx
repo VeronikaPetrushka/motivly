@@ -30,7 +30,7 @@ const Topics = ({ difficulty }) => {
             <ScrollView style={{width: '100%'}}>
                 <View style={styles.btnContainer}>
                     {difficulty === 'easy' && easy.map((item, index) => (
-                        <View key={index} style={{width: '40%', marginBottom: height * 0.015, alignItems: 'center'}}>
+                        <View key={index} style={{width: '100%', marginBottom: height * 0.04, alignItems: 'center'}}>
                             <TouchableOpacity style={styles.btn} onPress={() => handleNavigation(item, 'easy')}>
                                 <Image source={item.image} style={styles.image}/>
                             </TouchableOpacity>
@@ -43,7 +43,7 @@ const Topics = ({ difficulty }) => {
             <ScrollView style={{width: '100%'}}>
                 <View style={styles.btnContainer}>
                     {difficulty === 'peak' && peak.map((item, index) => (
-                        <View key={index} style={{width: '40%', marginBottom: height * 0.015, alignItems: 'center'}}>
+                        <View key={index} style={{width: '100%', marginBottom: height * 0.04, alignItems: 'center'}}>
                             <TouchableOpacity style={styles.btn} onPress={() => handleNavigation(item, 'peak')}>
                                 <Image source={item.image} style={styles.image}/>
                             </TouchableOpacity>
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
 
     btn: {
         width: '100%',
-        height: height * 0.15,
+        height: height * 0.25,
         borderRadius: 12,
         borderWidth: 2,
         borderColor: '#9d7ff7',
@@ -115,8 +115,8 @@ const styles = StyleSheet.create({
     },
 
     btnText: {
-        fontSize: 14,
-        fontWeight: '700',
+        fontSize: 18,
+        fontWeight: '900',
         color: '#9d7ff7',
         textAlign: 'center'
     }

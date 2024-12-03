@@ -55,7 +55,12 @@ const Icons = ({ type }) => {
         imageSource = require('../assets/common/saved.png');
         iconStyle.push(styles.back);
     break;
-
+    case 'music':
+        imageSource = require('../assets/common/music.png');
+    break;
+    case 'vibration':
+        imageSource = require('../assets/common/vibration.png');
+    break;
   }
 
   return (

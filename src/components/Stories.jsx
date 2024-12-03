@@ -93,8 +93,8 @@ const Stories = () => {
     renderItem={({ item, index }) => (
       <View style={{ alignItems: 'center' }}>
         <View style={styles.topicCard}>
-          <Image source={item.image} style={styles.topicImage} />
           <Text style={styles.topicTitle}>{item.topic}</Text>
+          <Image source={item.image} style={styles.topicImage} />
 
           <TouchableOpacity
             style={[
@@ -111,7 +111,7 @@ const Stories = () => {
         </View>
             <View style={{ width: width * 0.85, alignItems: 'center' }}>
               <ScrollView
-                style={{ width: width * 0.85, maxHeight: height * 0.2 }}
+                style={{ width: width * 0.85, maxHeight: height * 0.22 }}
                 nestedScrollEnabled={true}
               >
                 {purchasedTopics[index] &&
@@ -205,8 +205,7 @@ const styles = StyleSheet.create({
   topicCard: {
     width: width * 0.85,
     height: height * 0.42,
-    marginBottom: height * 0.03,
-    backgroundColor: '#f0f0f0',
+    marginBottom: height * 0.01,
     borderRadius: 10,
     marginHorizontal: 10,
     justifyContent: 'flex-start',

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert, Vibration, Dimensions, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useMusic } from '../constants/music.js';
+import Icons from './Icons.jsx';
 
 const { height } = Dimensions.get('window');
 
@@ -94,7 +95,10 @@ const Settings = () => {
                     <View style={{height: height * 0.15}} />
 
                     <View style={styles.regulatorContainer}>
-                        <Text style={styles.regulatorText}>Loudness</Text>
+                        {/* <Text style={styles.regulatorText}>Loudness</Text> */}
+                        <View style={[{width: 60, height: 60}, !isPlaying && {opacity: 0.5}]}>
+                            <Icons type={'music'} />
+                        </View>
                         <Text style={[styles.toggleText, isPlaying ? styles.toggleTextOn : styles.toggleTextOff]}>
                             {isPlaying ? 'On' : 'Off'}
                         </Text>
@@ -104,7 +108,10 @@ const Settings = () => {
                     </View>
 
                     <View style={styles.regulatorContainer}>
-                        <Text style={styles.regulatorText}>Vibration</Text>
+                        {/* <Text style={styles.regulatorText}>Vibration</Text> */}
+                        <View style={[{width: 60, height: 60}, !isPlaying && {opacity: 0.5}]}>
+                            <Icons type={'vibration'} />
+                        </View>
                         <Text style={[styles.toggleText, vibrationEnabled ? styles.toggleTextOn : styles.toggleTextOff]}>
                             {vibrationEnabled ? 'On' : 'Off'}
                         </Text>
@@ -113,7 +120,7 @@ const Settings = () => {
                         </TouchableOpacity>
                     </View>
 
-                    <View style={{height: height * 0.15}} />
+                    <View style={{height: height * 0.11}} />
 
                     <TouchableOpacity style={styles.resetBtn} onPress={() => setShowResetConfirmation(true)}>
                         <Text style={styles.btnText}>Reset</Text>
@@ -149,13 +156,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         justifyContent: 'space-around',
-        marginBottom: 15,
+        marginBottom: height * 0.04,
     },
     regulatorText: {
         fontSize: 22,
         textAlign: 'center',
         fontWeight: 'bold',
-        color: '#c489ad'
+        color: '#e460c3'
     },
     toggleContainer: {
         padding: 7,
@@ -164,19 +171,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 1,
         borderRadius: 30,
-        borderColor: '#c489ad',
+        borderColor: '#e460c3',
     },
     toggleContainerOff: {
-        borderColor: '#d1d1d1',
+        borderColor: '#8e7e8a',
     },
     toggleText: {
         fontSize: 16,
     },
     toggleTextOn: {
-        color: '#e2d6b1',
+        color: '#e460c3',
     },
     toggleTextOff: {
-        color: '#d1d1d1',
+        color: '#8e7e8a',
     },
     toggle: {
         borderRadius: 30,
@@ -184,22 +191,12 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     toggleOn: {
-        backgroundColor: '#c489ad',
+        backgroundColor: '#e460c3',
         alignSelf: 'flex-end',
     },
     toggleOff: {
-        backgroundColor: '#d1d1d1',
+        backgroundColor: '#8e7e8a',
         alignSelf: 'flex-start',
-    },
-    shareBtn: {
-        width: '100%',
-        backgroundColor: '#b9a76f',
-        borderRadius: 15,
-        padding: 15,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 15,
-        marginTop: height * 0.15,
     },
     btnText: {
         fontSize: 19,

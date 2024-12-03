@@ -237,10 +237,6 @@ const ChampionQuiz = ({ quiz }) => {
       <View style={styles.questionContainer}>
         <Text style={styles.question}>{question.question}</Text>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
-          <Text style={styles.timer}>{formatTime(timer)}</Text>
-          <Text style={styles.timer}>{score}</Text>
-        </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
           <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => setShowLives(true)}>
             {[...Array(3)].map((_, index) => (
               <View key={index} style={styles.heart}>
@@ -251,6 +247,10 @@ const ChampionQuiz = ({ quiz }) => {
           <TouchableOpacity onPress={() => setShowHints(true)} style={styles.hint}>
             <Icons type="hint" />
           </TouchableOpacity>
+        </View>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
+          <Text style={styles.timer}>{formatTime(timer)}</Text>
+          <Text style={styles.timer}>{score}</Text>
         </View>
         <View style={styles.optionsContainer}>
           {options.map((option, index) => {
@@ -469,13 +469,13 @@ const styles = StyleSheet.create({
     color: '#6c1b45',
   },
   heart: {
-    width: 35,
-    height: 35,
-    marginRight: 1,
+    width: 30,
+    height: 30,
+    marginRight: 3,
   },
   hint: {
-    width: 35,
-    height: 35,
+    width: 40,
+    height: 40,
   },
   hintsContainer: {
     height: '50%'

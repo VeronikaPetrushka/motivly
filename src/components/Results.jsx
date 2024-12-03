@@ -1,10 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, Dimensions, ImageBackground, TouchableOpacity, Share } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Dimensions, ImageBackground, TouchableOpacity, Share, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import Icons from './Icons';
 
 const { height, width } = Dimensions.get('window');
+
+const avatars = [
+  require('../assets/avatar/1.png'),
+  require('../assets/avatar/2.png'),
+  require('../assets/avatar/3.png'),
+  require('../assets/avatar/4.png'),
+  require('../assets/avatar/5.png'),
+  require('../assets/avatar/6.png'),
+  require('../assets/avatar/7.png'),
+  require('../assets/avatar/8.png'),
+  require('../assets/avatar/9.png'),
+  require('../assets/avatar/10.png'),
+]
 
 const Results = () => {
   const navigation = useNavigation();
@@ -25,6 +38,7 @@ const Results = () => {
       const user = {
         name: generateRandomName(),
         score: Math.floor(Math.random() * (11500) + 500),
+        avatar: avatars[Math.floor(Math.random() * avatars.length)],
       };
       generatedUsers.push(user);
     }
@@ -72,11 +86,13 @@ const Results = () => {
         data={users}
         renderItem={({ item }) => (
           <View style={styles.userContainer}>
+            <Image source={item.avatar} style={{width: 60, height: 60}} />
             <Text style={styles.userName}>{item.name}</Text>
             <Text style={styles.userScore}>{item.score}</Text>
           </View>
         )}
         keyExtractor={(item, index) => index.toString()}
+        contentContainerStyle={styles.list}
       />
 
       <TouchableOpacity style={styles.shareButton} onPress={handleShare}>
@@ -112,11 +128,18 @@ const styles = StyleSheet.create({
     color: '#e75da5',
     marginBottom: height * 0.03,
   },
+  list: {
+    width: width * 0.87,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
   userContainer: {
-    width: width * 0.85,
+    width: width * 0.41,
+    height: height * 0.25,
     padding: 15,
     backgroundColor: '#fff',
-    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     borderRadius: 10,
@@ -127,13 +150,15 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   userName: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600',
     color: '#6c1b45',
+    textAlign: 'center'
   },
   userScore: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#555',
+    fontWeight: '800'
   },
   shareButton: {
     width: 200,
