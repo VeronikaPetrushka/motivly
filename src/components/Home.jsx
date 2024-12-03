@@ -147,8 +147,8 @@ const Home = () => {
 
             <Image source={require('../assets/decor/1.png')} style={styles.image} />
 
-            <TouchableOpacity style={[styles.btn, {width: '100%', marginBottom: height * 0.05}]} onPress={() => navigation.navigate('QuizModeScreen')}>
-                <Text style={styles.btnTxt}>Unleash your potential</Text>
+            <TouchableOpacity style={[styles.btn, {width: '100%', marginBottom: height * 0.05, backgroundColor: '#fcccf0'}]} onPress={() => navigation.navigate('QuizModeScreen')}>
+                <Text style={[styles.btnTxt, {color: '#ff67d9'}]}>Unleash your potential</Text>
             </TouchableOpacity>
 
             <View style={styles.btnContainer}>
@@ -199,10 +199,6 @@ const styles = StyleSheet.create({
     userContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        // padding: 7,
-        // paddingHorizontal: 15,
-        // borderRadius: 15,
-        // backgroundColor: 'rgba(60, 60, 60, 0.55)',
         zIndex: 10,
         marginBottom: height * 0.03
     },
@@ -222,16 +218,6 @@ const styles = StyleSheet.create({
         height: '100%',
         resizeMode: 'cover'
     },
-
-    // nameBox: {
-    //     padding: 5, 
-    //     borderRadius: 10, 
-    //     backgroundColor: '#f9f9f9', 
-    //     shadowColor: '#000',
-    //     shadowOpacity: 0.2,
-    //     shadowOffset: { width: 0, height: 5 },
-    //     shadowRadius: 7,
-    // },
 
     name: {
         fontSize: 22,
@@ -274,7 +260,7 @@ const styles = StyleSheet.create({
         width: '47%',
         borderWidth: 0.5,
         borderColor: '#fff',
-        backgroundColor: '#9d7ff7',
+        backgroundColor: '#9de3fc',
         borderRadius: 12,
         marginBottom: 10,
         zIndex: 10
@@ -283,7 +269,7 @@ const styles = StyleSheet.create({
     btnTxt: {
         fontSize: 18,
         fontWeight: '900',
-        color: '#fff'
+        color: '#0693c6'
     }
 });
 

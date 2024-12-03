@@ -229,14 +229,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   buyButton: {
-    backgroundColor: '#e75da5',
+    backgroundColor: '#fcccf0',
     paddingVertical: height * 0.01,
     paddingHorizontal: 50,
     borderRadius: 10,
     marginBottom: 10,
   },
   buyButtonText: {
-    color: '#fff',
+    color: '#ff67d9',
     fontSize: 16,
     fontWeight: '900',
   },
@@ -255,13 +255,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   centerBonusButton: {
-    backgroundColor: '#28A745',
+    backgroundColor: '#9de3fc',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 12,
   },
   centerBonusButtonText: {
-    color: '#fff',
+    color: '#0693c6',
     fontSize: 16,
     fontWeight: '900',
   },

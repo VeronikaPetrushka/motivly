@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#cfe2f3'
     },
     task: {
-        color: '#000',
+        color: '#036081',
         fontSize: 22,
         fontWeight: '500',
         textAlign: 'center',
@@ -222,13 +222,15 @@ const styles = StyleSheet.create({
     levelButton: {
         margin: 5,
         padding: 10,
-        backgroundColor: '#6c1b45',
+        backgroundColor: '#9de3fc',
         borderRadius: 8,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: '#fff'
     },
     levelButtonText: {
-        color: '#fff',
+        color: '#0693c6',
         fontSize: 18,
         fontWeight: '800'
     },
