@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  Alert,
-  Dimensions
-} from "react-native";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, Dimensions, ImageBackground } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import Icons from "./Icons";
@@ -70,21 +62,23 @@ const Pinned = () => {
   );
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
-        <Icons type={"back"} />
-      </TouchableOpacity>
-      <Text style={styles.header}>Pinned Facts</Text>
-      {pinnedFacts.length > 0 ? (
-        <FlatList
-          data={pinnedFacts}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={renderFactItem}
-        />
-      ) : (
-        <Text style={styles.emptyText}>No pinned facts found. Start saving your favorites!</Text>
-      )}
-    </View>
+    <ImageBackground source={require('../assets/back/5.png')} style={{flex: 1}}>
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
+          <Icons type={"back"} />
+        </TouchableOpacity>
+        <Text style={styles.header}>Pinned Facts</Text>
+        {pinnedFacts.length > 0 ? (
+          <FlatList
+            data={pinnedFacts}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={renderFactItem}
+          />
+        ) : (
+          <Text style={styles.emptyText}>No pinned facts found. Start saving your favorites!</Text>
+        )}
+      </View>
+    </ImageBackground>
   );
 };
 
@@ -93,7 +87,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     paddingTop: height * 0.07,
-    backgroundColor: '#cfe2f3'
   },
   back: {
     width: 60,

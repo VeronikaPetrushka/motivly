@@ -9,22 +9,22 @@ const Article = ({title, description, article, image}) => {
     const navigation = useNavigation();
 
     return (
-        // <ImageBackground source={require('../assets/newDiz/back2.jpg')} style={{flex: 1}}>
-        <View style={styles.container}>
-            <TouchableOpacity style={styles.icon} onPress={() => navigation.goBack()}>
-                <Icons type={"back"} />
-            </TouchableOpacity>
-            <Image source={image} style={styles.image} />
-            <View style={styles.textContainer}>
-                <Text style={styles.title}>{title}</Text>
-                <ScrollView style={{ width: "100%" }}>
-                    <Text style={[styles.story, {marginBottom: height * 0.02}]}>{description}</Text>
-                    <Text style={styles.story}>{article}</Text>
-                    <View style={{ height: 50 }} />
-                </ScrollView>
+        <ImageBackground source={require('../assets/back/5.png')} style={{flex: 1}}>
+            <View style={styles.container}>
+                <TouchableOpacity style={styles.icon} onPress={() => navigation.goBack()}>
+                    <Icons type={"back"} />
+                </TouchableOpacity>
+                <Image source={image} style={styles.image} />
+                <View style={styles.textContainer}>
+                    <Text style={styles.title}>{title}</Text>
+                    <ScrollView style={{ width: "100%" }}>
+                        <Text style={[styles.story, {marginBottom: height * 0.02}]}>{description}</Text>
+                        <Text style={styles.story}>{article}</Text>
+                        <View style={{ height: 50 }} />
+                    </ScrollView>
+                </View>
             </View>
-        </View>
-        // </ImageBackground>
+        </ImageBackground>
     );
 };
 
@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "flex-start",
         paddingBottom: height * 0.2,
-        backgroundColor: '#cfe2f3'
     },
 
     image: {

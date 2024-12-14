@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-  Alert,
-} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions, Alert, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -277,7 +269,7 @@ const AddGoal = () => {
                       onChangeText={setTitle}
                     />
                   ) : (
-                    <Text style={[styles.ellipsisText, {width: 280}]} numberOfLines={1}>{title}</Text>
+                    <Text style={[styles.ellipsisText, {width: 267}]} numberOfLines={1}>{title}</Text>
                   )}
                   <TouchableOpacity
                     onPress={() =>
@@ -300,7 +292,7 @@ const AddGoal = () => {
                       onChangeText={setGoalInput}
                     />
                   ) : (
-                    <Text style={[styles.ellipsisText, {width: 280}]} numberOfLines={1}>{goalInput}</Text>
+                    <Text style={[styles.ellipsisText, {width: 266}]} numberOfLines={1}>{goalInput}</Text>
                   )}
                   <TouchableOpacity
                     onPress={() =>
@@ -315,7 +307,7 @@ const AddGoal = () => {
                 </View>
           
                 <View style={styles.reviewField}>
-                  <Text style={[styles.label, editingField === 'successMeasure' && {width: 77}]}>Measure of Success:</Text>
+                  <Text style={[styles.label, editingField === 'successMeasure' && {width: 72}]}>Measure of Success:</Text>
                   {editingField === 'successMeasure' ? (
                     <TextInput
                       style={[styles.editInput, editingField === 'successMeasure' && {width: '57%'}]}
@@ -376,7 +368,7 @@ const AddGoal = () => {
                         </View>
                     </View>
                   ) : (
-                    <Text style={{width: 230, textAlign: 'right'}}>{`${day}/${month}/${year}`}</Text>
+                    <Text style={{width: 217, textAlign: 'right'}}>{`${day}/${month}/${year}`}</Text>
                   )}
                   <TouchableOpacity
                     onPress={() => setEditingField(editingField === 'date' ? null : 'date')}
@@ -406,7 +398,7 @@ const AddGoal = () => {
                       ))}
                     </View>
                   ) : (
-                    <Text style={{width: 250, textAlign: 'right'}}>{category}</Text>
+                    <Text style={{width: 235, textAlign: 'right'}}>{category}</Text>
                   )}
                   <TouchableOpacity
                     onPress={() =>
@@ -435,12 +427,14 @@ const AddGoal = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.icon} onPress={() => navigation.goBack()}>
-          <Icons type={"back"} />
-      </TouchableOpacity>
-      {renderStep()}
-    </View>
+    <ImageBackground source={require('../assets/back/5.png')} style={{flex: 1}}>
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.icon} onPress={() => navigation.goBack()}>
+            <Icons type={"back"} />
+        </TouchableOpacity>
+        {renderStep()}
+      </View>
+    </ImageBackground>
   );
   };
 
@@ -449,7 +443,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     justifyContent: 'center',
-    backgroundColor: '#cfe2f3'
   },
   icon: {
     width: 60,
@@ -530,14 +523,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   ellipsisText: {
-    width: 170,           
+    width: 160,           
     overflow: 'hidden',   
     textOverflow: 'ellipsis', 
     whiteSpace: 'nowrap',
     textAlign: 'right'
   },
   editInput: {
-    width: '65%',
+    width: '62%',
     borderWidth: 1,
     borderColor: '#6c1b45',
     padding: 8,
@@ -548,6 +541,7 @@ const styles = StyleSheet.create({
     padding: 5,
     backgroundColor: '#f99ed6',
     borderRadius: 5,
+    marginLeft: 10,
   },
   editText: {
     color: '#fff',

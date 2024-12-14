@@ -25,67 +25,67 @@ const QuizMode = () => {
   };
 
   return (
-    // <ImageBackground source={require('../assets/newDiz/back1.jpg')} style={{flex: 1}}>
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
-        <Icons type={"back"} />
-      </TouchableOpacity>
-      <Text style={styles.title}>Quiz Mode</Text>
+    <ImageBackground source={require('../assets/back/5.png')} style={{flex: 1}}>
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
+          <Icons type={"back"} />
+        </TouchableOpacity>
+        <Text style={styles.title}>Quiz Mode</Text>
 
-      <TouchableOpacity
-        style={styles.btn}
-        onPress={() => handleModeSelect("easy")}
-      >
-        <Text style={styles.btnText}>First Step</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => handleModeSelect("easy")}
+        >
+          <Text style={styles.btnText}>First Step</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.btn}
-        onPress={() => handleModeSelect("peak")}
-      >
-        <Text style={styles.btnText}>Peak of success</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => handleModeSelect("peak")}
+        >
+          <Text style={styles.btnText}>Peak of success</Text>
+        </TouchableOpacity>
 
-      <Modal
-        visible={modalVisible}
-        animationType="slide"
-        transparent={true}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContainer}>
-            <Text style={styles.modalTitle}>
-              {selectedMode === "easy" ? "First Step" : "Peak of success"}
-            </Text>
+        <Modal
+          visible={modalVisible}
+          animationType="slide"
+          transparent={true}
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContainer}>
+              <Text style={styles.modalTitle}>
+                {selectedMode === "easy" ? "First Step" : "Peak of success"}
+              </Text>
 
-            <Text style={styles.modalText}>
-                {selectedMode === "easy"
-                    ? "The First Step quiz features multiple-choice questions across 4 topics, with 15 questions per topic and 3 answer options. Each quiz has a time limit of 1 minute and 30 seconds, with 3 lives. You can purchase hints (3 types) and extra lives to aid your progress."
-                    : "The Peak of success quiz consists of True/False questions across 4 topics, with 15 questions per topic. Each quiz has a time limit of 1 minute and 3 lives. Answering 3 consecutive questions correctly adds 30 seconds to your time. Like the First Step mode, you can purchase extra lives and 2 types of hints to assist you."
-                }
-            </Text>
+              <Text style={styles.modalText}>
+                  {selectedMode === "easy"
+                      ? "The First Step quiz features multiple-choice questions across 4 topics, with 15 questions per topic and 3 answer options. Each quiz has a time limit of 1 minute and 30 seconds, with 3 lives. You can purchase hints (3 types) and extra lives to aid your progress."
+                      : "The Peak of success quiz consists of True/False questions across 4 topics, with 15 questions per topic. Each quiz has a time limit of 1 minute and 3 lives. Answering 3 consecutive questions correctly adds 30 seconds to your time. Like the First Step mode, you can purchase extra lives and 2 types of hints to assist you."
+                  }
+              </Text>
 
 
-            <View style={styles.modalButtons}>
-              <TouchableOpacity
-                style={styles.closeButton}
-                onPress={() => setModalVisible(false)}
-              >
-                <Text style={styles.closeButtonText}>Close</Text>
-              </TouchableOpacity>
+              <View style={styles.modalButtons}>
+                <TouchableOpacity
+                  style={styles.closeButton}
+                  onPress={() => setModalVisible(false)}
+                >
+                  <Text style={styles.closeButtonText}>Close</Text>
+                </TouchableOpacity>
 
-              <TouchableOpacity
-                style={styles.proceedButton}
-                onPress={handleProceed}
-              >
-                <Text style={styles.proceedButtonText}>Proceed</Text>
-              </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.proceedButton}
+                  onPress={handleProceed}
+                >
+                  <Text style={styles.proceedButtonText}>Proceed</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
-      </Modal>
-    </View>
-    // </ImageBackground>
+        </Modal>
+      </View>
+    </ImageBackground>
   );
 };
 
@@ -97,7 +97,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     padding: 30,
     paddingTop: height * 0.07,
-    backgroundColor: '#cfe2f3'
   },
   back: {
     width: 60,

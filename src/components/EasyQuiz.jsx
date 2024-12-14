@@ -362,22 +362,22 @@ const EasyQuiz = ({ quiz }) => {
   };
 
   return (
-    // <ImageBackground source={require('../assets/newDiz/back1.jpg')} style={{flex: 1}}>
-    <View style={styles.container}>
-      <Text style={styles.topic}>{quiz.topic}</Text>
-      <Image source={quiz.image} style={styles.image} />
-      {quizEnded ? renderFinish() : showHints ? (
-        renderHints()
-      ) : showLives ? (
-        renderLives()
-      ) : currentQuestionIndex < quiz.questions.length ? (
-        renderQuestion()
-      ) : (
-        renderFinish()
-      )}
+    <ImageBackground source={require('../assets/back/5.png')} style={{flex: 1}}>
+      <View style={styles.container}>
+        <Text style={styles.topic}>{quiz.topic}</Text>
+        <Image source={quiz.image} style={styles.image} />
+        {quizEnded ? renderFinish() : showHints ? (
+          renderHints()
+        ) : showLives ? (
+          renderLives()
+        ) : currentQuestionIndex < quiz.questions.length ? (
+          renderQuestion()
+        ) : (
+          renderFinish()
+        )}
 
-    </View>
-    // </ImageBackground>
+      </View>
+    </ImageBackground>
   );
 };
 
@@ -389,7 +389,6 @@ const styles = StyleSheet.create({
     paddingTop: height * 0.07,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#cfe2f3'
   },
   topic: {
     fontSize: 24,

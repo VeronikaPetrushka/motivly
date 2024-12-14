@@ -130,58 +130,58 @@ const Home = () => {
     };
 
     return(
-        // <ImageBackground source={require('../assets/newDiz/back2.jpg')} style={{flex: 1}}>
-        <View style={styles.container}>
+        <ImageBackground source={require('../assets/back/5.png')} style={{flex: 1}}>
+          <View style={styles.container}>
 
-            <TouchableOpacity style={styles.userContainer} onPress={() => setUserProfileModalVisible(true)}>
-                <View style={styles.imageContainer}>
-                    <Image 
-                        source={uploadedImage} 
-                        style={styles.avatarImage}
-                    />
-                </View>
-                    <View style={styles.nameBox}>
-                        <Text style={styles.name}>Hi, {userName || "user"}</Text>
-                    </View>
-            </TouchableOpacity>
+              <TouchableOpacity style={styles.userContainer} onPress={() => setUserProfileModalVisible(true)}>
+                  <View style={styles.imageContainer}>
+                      <Image 
+                          source={uploadedImage} 
+                          style={styles.avatarImage}
+                      />
+                  </View>
+                      <View style={styles.nameBox}>
+                          <Text style={styles.name}>Hi, {userName || "user"}</Text>
+                      </View>
+              </TouchableOpacity>
 
-            <Image source={require('../assets/decor/1.png')} style={styles.image} />
+              <Image source={require('../assets/decor/1.png')} style={styles.image} />
 
-            <TouchableOpacity style={[styles.btn, {width: '100%', marginBottom: height * 0.05, backgroundColor: '#fcccf0'}]} onPress={() => navigation.navigate('QuizModeScreen')}>
-                <Text style={[styles.btnTxt, {color: '#ff67d9'}]}>Unleash your potential</Text>
-            </TouchableOpacity>
+              <TouchableOpacity style={[styles.btn, {width: '100%', marginBottom: height * 0.05, backgroundColor: '#fcccf0'}]} onPress={() => navigation.navigate('QuizModeScreen')}>
+                  <Text style={[styles.btnTxt, {color: '#ff67d9'}]}>Unleash your potential</Text>
+              </TouchableOpacity>
 
-            <View style={styles.btnContainer}>
+              <View style={styles.btnContainer}>
 
-            <TouchableOpacity
-                style={[styles.btn, buttonDisabled && {opacity: 0.6}]}
-                onPress={handleBonusPress}
-                disabled={buttonDisabled}
-                >
-                <Text style={styles.btnTxt}>
-                    {buttonDisabled ? `${timeLeft}` : 'Daily bonus'}
-                </Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                  style={[styles.btn, buttonDisabled && {opacity: 0.6}]}
+                  onPress={handleBonusPress}
+                  disabled={buttonDisabled}
+                  >
+                  <Text style={styles.btnTxt}>
+                      {buttonDisabled ? `${timeLeft}` : 'Daily bonus'}
+                  </Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('PinnedScreen')}>
-                <Text style={styles.btnTxt}>Pinned</Text>
-            </TouchableOpacity>
+              <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('PinnedScreen')}>
+                  <Text style={styles.btnTxt}>Pinned</Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('ResultsScreen')}>
-                <Text style={styles.btnTxt}>Results</Text>
-            </TouchableOpacity>
+              <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('ResultsScreen')}>
+                  <Text style={styles.btnTxt}>Results</Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity style={styles.btn} onPress={() => setAboutModalVisible(true)}>
-                <Text style={styles.btnTxt}>About us</Text>
-            </TouchableOpacity>
+              <TouchableOpacity style={styles.btn} onPress={() => setAboutModalVisible(true)}>
+                  <Text style={styles.btnTxt}>About us</Text>
+              </TouchableOpacity>
 
-            </View>
+              </View>
 
-            <DailyModal visible={dailyModalVisible} onClose={() => setDailyModalVisible(false)} />
-            <UserProfile visible={userProfileModalVisible} onClose={closeUserProfileModal}/>
-            <AboutModal visible={aboutModalVisible} onClose={() => setAboutModalVisible(false)}/>
-        </View>
-        // </ImageBackground>
+              <DailyModal visible={dailyModalVisible} onClose={() => setDailyModalVisible(false)} />
+              <UserProfile visible={userProfileModalVisible} onClose={closeUserProfileModal}/>
+              <AboutModal visible={aboutModalVisible} onClose={() => setAboutModalVisible(false)}/>
+          </View>
+        </ImageBackground>
     )
 };
 
@@ -193,7 +193,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         padding: 30,
         paddingTop: height * 0.07,
-        backgroundColor: '#cfe2f3'
     },
 
     userContainer: {

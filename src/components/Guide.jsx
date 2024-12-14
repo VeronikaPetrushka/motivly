@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, View, StyleSheet, Text, Dimensions, ScrollView } from "react-native";
+import { TouchableOpacity, View, StyleSheet, Text, Dimensions, ScrollView, ImageBackground } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import guide from "../constants/guide";
 import Icons from "./Icons";
@@ -15,48 +15,50 @@ const Guide = () => {
     };
 
     return (
-        <View style={styles.container}>
-            {selected ? (
-                <View style={styles.detailsContainer}>
-                    <TouchableOpacity style={styles.back} onPress={() => setSelected(null)}>
-                        <Icons type={"back"} />
-                    </TouchableOpacity>
+        <ImageBackground source={require('../assets/back/5.png')} style={{flex: 1}}>
+            <View style={styles.container}>
+                {selected ? (
+                    <View style={styles.detailsContainer}>
+                        <TouchableOpacity style={styles.back} onPress={() => setSelected(null)}>
+                            <Icons type={"back"} />
+                        </TouchableOpacity>
 
-                    <ScrollView style={{marginTop: height * 0.07}}>
-                        <Text style={styles.selectedTitle}>{selected.title}</Text>
-                        <Text style={styles.selectedDescription}>{selected.description}</Text>
-                        
-                        {selected.points?.map((point, index) => (
-                            <View key={index} style={styles.pointContainer}>
-                                <Text style={styles.pointTitle}>{point.subTitle}</Text>
-                                <Text style={styles.pointText}>{point.point}</Text>
-                            </View>
-                        ))}
-                    </ScrollView>
-                </View>
-            ) : (
-                <View style={styles.listContainer}>
-                    <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
-                        <Icons type={"back"} />
-                    </TouchableOpacity>
+                        <ScrollView style={{marginTop: height * 0.07}}>
+                            <Text style={styles.selectedTitle}>{selected.title}</Text>
+                            <Text style={styles.selectedDescription}>{selected.description}</Text>
+                            
+                            {selected.points?.map((point, index) => (
+                                <View key={index} style={styles.pointContainer}>
+                                    <Text style={styles.pointTitle}>{point.subTitle}</Text>
+                                    <Text style={styles.pointText}>{point.point}</Text>
+                                </View>
+                            ))}
+                        </ScrollView>
+                    </View>
+                ) : (
+                    <View style={styles.listContainer}>
+                        <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
+                            <Icons type={"back"} />
+                        </TouchableOpacity>
 
-                    <Text style={styles.title}>The Complete Guide</Text>
+                        <Text style={styles.title}>The Complete Guide</Text>
 
-                    <ScrollView>
-                        {guide.map((item, index) => (
-                            <TouchableOpacity 
-                                key={index} 
-                                style={styles.guideBtn} 
-                                onPress={() => handleSelect(item)}
-                            >
-                                <Text style={styles.guideBtnText}>{item.title}</Text>
-                            </TouchableOpacity>
-                        ))}
-                    </ScrollView>
+                        <ScrollView>
+                            {guide.map((item, index) => (
+                                <TouchableOpacity 
+                                    key={index} 
+                                    style={styles.guideBtn} 
+                                    onPress={() => handleSelect(item)}
+                                >
+                                    <Text style={styles.guideBtnText}>{item.title}</Text>
+                                </TouchableOpacity>
+                            ))}
+                        </ScrollView>
 
-                </View>
-            )}
-        </View>
+                    </View>
+                )}
+            </View>
+        </ImageBackground>
     );
 };
 
@@ -68,7 +70,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         padding: 30,
         paddingTop: height * 0.07,
-        backgroundColor: '#cfe2f3'
     },
     title: {
         fontWeight: "800",

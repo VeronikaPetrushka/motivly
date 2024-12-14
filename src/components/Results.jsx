@@ -75,31 +75,31 @@ const Results = () => {
   };
 
   return (
-    // <ImageBackground source={require('../assets/newDiz/back1.jpg')} style={{flex: 1}}>
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
-        <Icons type={"back"} />
-      </TouchableOpacity>
-      <Text style={styles.totalScore}>{totalScore}</Text>
-      
-      <FlatList
-        data={users}
-        renderItem={({ item }) => (
-          <View style={styles.userContainer}>
-            <Image source={item.avatar} style={{width: 60, height: 60}} />
-            <Text style={styles.userName}>{item.name}</Text>
-            <Text style={styles.userScore}>{item.score}</Text>
-          </View>
-        )}
-        keyExtractor={(item, index) => index.toString()}
-        contentContainerStyle={styles.list}
-      />
+    <ImageBackground source={require('../assets/back/5.png')} style={{flex: 1}}>
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
+          <Icons type={"back"} />
+        </TouchableOpacity>
+        <Text style={styles.totalScore}>{totalScore}</Text>
+        
+        <FlatList
+          data={users}
+          renderItem={({ item }) => (
+            <View style={styles.userContainer}>
+              <Image source={item.avatar} style={{width: 60, height: 60}} />
+              <Text style={styles.userName}>{item.name}</Text>
+              <Text style={styles.userScore}>{item.score}</Text>
+            </View>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+          contentContainerStyle={styles.list}
+        />
 
-      <TouchableOpacity style={styles.shareButton} onPress={handleShare}>
-        <Text style={styles.shareButtonText}>Share Your Score</Text>
-      </TouchableOpacity>
-    </View>
-    // </ImageBackground>
+        <TouchableOpacity style={styles.shareButton} onPress={handleShare}>
+          <Text style={styles.shareButtonText}>Share Your Score</Text>
+        </TouchableOpacity>
+      </View>
+    </ImageBackground>
   );
 };
 
@@ -111,7 +111,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         padding: 20,
         paddingTop: height * 0.07,
-        backgroundColor: '#cfe2f3'
     },
     back: {
       width: 60,

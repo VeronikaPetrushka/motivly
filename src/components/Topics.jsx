@@ -19,42 +19,42 @@ const Topics = ({ difficulty }) => {
     };
 
     return (
-        // <ImageBackground source={require('../assets/newDiz/back1.jpg')} style={{flex: 1}}>
-        <View style={styles.container}>
-            <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
-                <Icons type={"back"} />
-            </TouchableOpacity>
+        <ImageBackground source={require('../assets/back/5.png')} style={{flex: 1}}>
+            <View style={styles.container}>
+                <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
+                    <Icons type={"back"} />
+                </TouchableOpacity>
 
-            <Text style={styles.title}>Topics</Text>
+                <Text style={styles.title}>Topics</Text>
 
-            <ScrollView style={{width: '100%'}}>
-                <View style={styles.btnContainer}>
-                    {difficulty === 'easy' && easy.map((item, index) => (
-                        <View key={index} style={{width: '100%', marginBottom: height * 0.04, alignItems: 'center'}}>
-                            <TouchableOpacity style={styles.btn} onPress={() => handleNavigation(item, 'easy')}>
-                                <Image source={item.image} style={styles.image}/>
-                            </TouchableOpacity>
-                            <Text style={styles.btnText}>{item.topic}</Text>
-                        </View>
-                    ))}
-                </View>
-            </ScrollView>
+                <ScrollView style={{width: '100%'}}>
+                    <View style={styles.btnContainer}>
+                        {difficulty === 'easy' && easy.map((item, index) => (
+                            <View key={index} style={{width: '100%', marginBottom: height * 0.04, alignItems: 'center'}}>
+                                <TouchableOpacity style={styles.btn} onPress={() => handleNavigation(item, 'easy')}>
+                                    <Image source={item.image} style={styles.image}/>
+                                </TouchableOpacity>
+                                <Text style={styles.btnText}>{item.topic}</Text>
+                            </View>
+                        ))}
+                    </View>
+                </ScrollView>
 
-            <ScrollView style={{width: '100%'}}>
-                <View style={styles.btnContainer}>
-                    {difficulty === 'peak' && peak.map((item, index) => (
-                        <View key={index} style={{width: '100%', marginBottom: height * 0.04, alignItems: 'center'}}>
-                            <TouchableOpacity style={styles.btn} onPress={() => handleNavigation(item, 'peak')}>
-                                <Image source={item.image} style={styles.image}/>
-                            </TouchableOpacity>
-                            <Text style={styles.btnText}>{item.topic}</Text>
-                        </View>
-                    ))}
-                </View>
-            </ScrollView>
+                <ScrollView style={{width: '100%'}}>
+                    <View style={styles.btnContainer}>
+                        {difficulty === 'peak' && peak.map((item, index) => (
+                            <View key={index} style={{width: '100%', marginBottom: height * 0.04, alignItems: 'center'}}>
+                                <TouchableOpacity style={styles.btn} onPress={() => handleNavigation(item, 'peak')}>
+                                    <Image source={item.image} style={styles.image}/>
+                                </TouchableOpacity>
+                                <Text style={styles.btnText}>{item.topic}</Text>
+                            </View>
+                        ))}
+                    </View>
+                </ScrollView>
 
-        </View>
-        // </ImageBackground>
+            </View>
+        </ImageBackground>
     );
 };
 
@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
       padding: 30,
       paddingTop: height * 0.07,
       paddingBottom: height * 0.12,
-      backgroundColor: '#cfe2f3'
     },
 
     back: {

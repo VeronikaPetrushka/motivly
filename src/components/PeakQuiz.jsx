@@ -355,41 +355,41 @@ const ChampionQuiz = ({ quiz }) => {
 
 
   return (
-    // <ImageBackground source={require('../assets/newDiz/back1.jpg')} style={{flex: 1}}>
-    <View style={styles.container}>
-      <Text style={styles.topic}>{quiz.topic}</Text>
-      <Image source={quiz.image} style={styles.image} />
-      {quizEnded ? renderFinish() : showHints ? (
-        renderHints()
-      ) : showLives ? (
-        renderLives()
-      ) : currentQuestionIndex < quiz.questions.length ? (
-        renderQuestion()
-      ) : (
-        renderFinish()
-      )}
+    <ImageBackground source={require('../assets/back/5.png')} style={{flex: 1}}>
+      <View style={styles.container}>
+        <Text style={styles.topic}>{quiz.topic}</Text>
+        <Image source={quiz.image} style={styles.image} />
+        {quizEnded ? renderFinish() : showHints ? (
+          renderHints()
+        ) : showLives ? (
+          renderLives()
+        ) : currentQuestionIndex < quiz.questions.length ? (
+          renderQuestion()
+        ) : (
+          renderFinish()
+        )}
 
-      <Modal
-            transparent={true}
-            visible={modalVisible}
-            animationType="fade"
-            onRequestClose={() => setModalVisible(false)}
-        >
-            <View style={styles.modalContainer}>
-                <View style={styles.modalContent}>
-                <ScrollView style={styles.ScrollView}>
-                    <Text style={styles.title}>{quiz.title}</Text>
-                    <Text style={[styles.modalText, {fontWeight: '700', marginBottom: 20, color: '#f57bbb'}]}>{quiz.quote}</Text>
-                    <Text style={styles.modalText}>{quiz.description}</Text>
-                    </ScrollView>
-                    <TouchableOpacity style={styles.closeButton} onPress={() => setModalVisible(false)}>
-                        <Icons type={'close'}/>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </Modal>
-    </View>
-    // </ImageBackground>
+        <Modal
+              transparent={true}
+              visible={modalVisible}
+              animationType="fade"
+              onRequestClose={() => setModalVisible(false)}
+          >
+              <View style={styles.modalContainer}>
+                  <View style={styles.modalContent}>
+                  <ScrollView style={styles.ScrollView}>
+                      <Text style={styles.title}>{quiz.title}</Text>
+                      <Text style={[styles.modalText, {fontWeight: '700', marginBottom: 20, color: '#f57bbb'}]}>{quiz.quote}</Text>
+                      <Text style={styles.modalText}>{quiz.description}</Text>
+                      </ScrollView>
+                      <TouchableOpacity style={styles.closeButton} onPress={() => setModalVisible(false)}>
+                          <Icons type={'close'}/>
+                      </TouchableOpacity>
+                  </View>
+              </View>
+          </Modal>
+      </View>
+    </ImageBackground>
   );
 };
 
@@ -401,7 +401,6 @@ const styles = StyleSheet.create({
     paddingTop: height * 0.07,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#cfe2f3'
   },
   topic: {
     fontSize: 24,

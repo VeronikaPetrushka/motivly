@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image, Dimensions, Alert, ScrollView, Modal } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image, Dimensions, Alert, ScrollView, Modal, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import stories from '../constants/stories';
@@ -84,104 +84,106 @@ const Stories = () => {
   };
 
   return (
-<View style={styles.container}>
-  <Text style={styles.scoreText}>{totalScore}</Text>
+      <ImageBackground source={require('../assets/back/5.png')} style={{flex: 1}}>
+        <View style={styles.container}>
+          <Text style={styles.scoreText}>{totalScore}</Text>
 
-  <FlatList
-    horizontal
-    data={stories}
-    renderItem={({ item, index }) => (
-      <View style={{ alignItems: 'center' }}>
-        <View style={styles.topicCard}>
-          <Text style={styles.topicTitle}>{item.topic}</Text>
-          <Image source={item.image} style={styles.topicImage} />
+          <FlatList
+            horizontal
+            data={stories}
+            renderItem={({ item, index }) => (
+              <View style={{ alignItems: 'center' }}>
+                <View style={styles.topicCard}>
+                  <Text style={styles.topicTitle}>{item.topic}</Text>
+                  <Image source={item.image} style={styles.topicImage} />
 
-          <TouchableOpacity
-            style={[
-              styles.buyButton,
-              totalScore < 2000 && { backgroundColor: '#d3d3d3' },
-            ]}
-            onPress={() => handleBuy(index)}
-            disabled={!!purchasedTopics[index] || totalScore < 2000}
-          >
-            <Text style={styles.buyButtonText}>
-              {purchasedTopics[index] ? 'Purchased' : 'Buy for 2000'}
-            </Text>
-          </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[
+                      styles.buyButton,
+                      totalScore < 2000 && { backgroundColor: '#d3d3d3' },
+                    ]}
+                    onPress={() => handleBuy(index)}
+                    disabled={!!purchasedTopics[index] || totalScore < 2000}
+                  >
+                    <Text style={styles.buyButtonText}>
+                      {purchasedTopics[index] ? 'Purchased' : 'Buy for 2000'}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                    <View style={{ width: width * 0.85, alignItems: 'center' }}>
+                      <ScrollView
+                        style={{ width: width * 0.85, maxHeight: height * 0.22 }}
+                        nestedScrollEnabled={true}
+                      >
+                        {purchasedTopics[index] &&
+                          purchasedTopics[index].articles.map((article, idx) => (
+                            <TouchableOpacity 
+                                key={idx} 
+                                style={styles.titleBtn} 
+                                onPress={() => navigation.navigate('ArticleScreen', {
+                                title: article.title,
+                                description: article.description,
+                                article: article.article,
+                                image: article.image,
+                            })}>
+                              <Text style={styles.articleTitle}>{article.title}</Text>
+                            </TouchableOpacity>
+                          ))}
+                      </ScrollView>
+                    </View>
+
+              </View>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+            showsHorizontalScrollIndicator={false}
+            ref={flatListRef}
+            extraData={{ currentIndex, purchasedTopics, purchasedStories }}
+          />
+
+          <View style={styles.paginationContainer}>
+            <TouchableOpacity
+              onPress={goToPrevious}
+              style={[styles.arrow, { transform: [{ rotate: '180deg' }] }]}
+            >
+              <Icons type={'arrow'} />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.centerBonusButton}
+              onPress={() => handleBonusStory(currentIndex)}
+            >
+              <Text style={styles.centerBonusButtonText}>
+                {purchasedStories[currentIndex] ? 'Read Story' : 'Bonus for 500'}
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={goToNext} style={styles.arrow}>
+              <Icons type={'arrow'} />
+            </TouchableOpacity>
+          </View>
+
+          {selectedStory && (
+            <Modal
+              visible={modalVisible}
+              transparent={true}
+              animationType="fade"
+              onRequestClose={() => setModalVisible(false)}
+            >
+              <View style={styles.modalContainer}>
+                <View style={styles.modalContent}>
+                  <Text style={styles.modalTitle}>{selectedStory.storyName}</Text>
+                  <ScrollView>
+                    <Text style={styles.modalText}>{selectedStory.story}</Text>
+                  </ScrollView>
+                  <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeButton}>
+                    <Text style={styles.closeButtonText}>Close</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
+          )}
         </View>
-            <View style={{ width: width * 0.85, alignItems: 'center' }}>
-              <ScrollView
-                style={{ width: width * 0.85, maxHeight: height * 0.22 }}
-                nestedScrollEnabled={true}
-              >
-                {purchasedTopics[index] &&
-                  purchasedTopics[index].articles.map((article, idx) => (
-                    <TouchableOpacity 
-                        key={idx} 
-                        style={styles.titleBtn} 
-                        onPress={() => navigation.navigate('ArticleScreen', {
-                        title: article.title,
-                        description: article.description,
-                        article: article.article,
-                        image: article.image,
-                    })}>
-                      <Text style={styles.articleTitle}>{article.title}</Text>
-                    </TouchableOpacity>
-                  ))}
-              </ScrollView>
-            </View>
-
-      </View>
-    )}
-    keyExtractor={(item, index) => index.toString()}
-    showsHorizontalScrollIndicator={false}
-    ref={flatListRef}
-    extraData={{ currentIndex, purchasedTopics, purchasedStories }}
-  />
-
-  <View style={styles.paginationContainer}>
-    <TouchableOpacity
-      onPress={goToPrevious}
-      style={[styles.arrow, { transform: [{ rotate: '180deg' }] }]}
-    >
-      <Icons type={'arrow'} />
-    </TouchableOpacity>
-
-    <TouchableOpacity
-      style={styles.centerBonusButton}
-      onPress={() => handleBonusStory(currentIndex)}
-    >
-      <Text style={styles.centerBonusButtonText}>
-        {purchasedStories[currentIndex] ? 'Read Story' : 'Bonus for 500'}
-      </Text>
-    </TouchableOpacity>
-
-    <TouchableOpacity onPress={goToNext} style={styles.arrow}>
-      <Icons type={'arrow'} />
-    </TouchableOpacity>
-  </View>
-
-  {selectedStory && (
-    <Modal
-      visible={modalVisible}
-      transparent={true}
-      animationType="fade"
-      onRequestClose={() => setModalVisible(false)}
-    >
-      <View style={styles.modalContainer}>
-        <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>{selectedStory.storyName}</Text>
-          <ScrollView>
-            <Text style={styles.modalText}>{selectedStory.story}</Text>
-          </ScrollView>
-          <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeButton}>
-            <Text style={styles.closeButtonText}>Close</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </Modal>
-  )}
-</View>
+      </ImageBackground>
   );
 };
 
@@ -194,7 +196,6 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: height * 0.07,
     paddingBottom: height * 0.12,
-    backgroundColor: '#cfe2f3'
   },
   scoreText: {
     color: '#e75da5',

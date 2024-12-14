@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TouchableOpacity, Text, Dimensions, Modal, FlatList } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Text, Dimensions, Modal, FlatList, ImageBackground } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
@@ -87,174 +87,176 @@ const Goal = () => {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Create a new goal</Text>
+        <ImageBackground source={require('../assets/back/5.png')} style={{flex: 1}}>
+            <View style={styles.container}>
+                <Text style={styles.title}>Create a new goal</Text>
 
-            <FlatList
-                data={goals}
-                keyExtractor={(item, index) => index.toString()}
-                horizontal
-                pagingEnabled
-                showsHorizontalScrollIndicator={false}
-                onScroll={handleScroll}
-                contentContainerStyle={styles.list}
-                renderItem={({ item }) => (
-                    <View style={[styles.goalCard, item.completed && {borderColor: 'green'}]}>
-                        <Text style={styles.goalTitle}>{item.title}</Text>
-                        <Text style={styles.goalDate}>
-                            {item.date?.day}/{item.date?.month}/{item.date?.year}
-                        </Text>
-                        <TouchableOpacity
-                            style={styles.detailsBtn}
-                            onPress={() => openDetailsModal(item)}
-                        >
-                            <Text style={styles.detailsBtnText}>Details</Text>
-                        </TouchableOpacity>
-                        <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                <FlatList
+                    data={goals}
+                    keyExtractor={(item, index) => index.toString()}
+                    horizontal
+                    pagingEnabled
+                    showsHorizontalScrollIndicator={false}
+                    onScroll={handleScroll}
+                    contentContainerStyle={styles.list}
+                    renderItem={({ item }) => (
+                        <View style={[styles.goalCard, item.completed && {borderColor: 'green'}]}>
+                            <Text style={styles.goalTitle}>{item.title}</Text>
+                            <Text style={styles.goalDate}>
+                                {item.date?.day}/{item.date?.month}/{item.date?.year}
+                            </Text>
                             <TouchableOpacity
-                                style={[
-                                    styles.toolBtn,
-                                    { backgroundColor: item.completed ? '#acdf54' : '#ffb3fd' }
-                                ]}
-                                onPress={async () => {
-                                    const updatedGoals = goals.map((goal) =>
-                                        goal === item ? { ...goal, completed: !goal.completed } : goal
-                                    );
-                                    setGoals(updatedGoals);
-                                    try {
-                                        await AsyncStorage.setItem('goalsData', JSON.stringify(updatedGoals));
-                                    } catch (error) {
-                                        console.error("Error updating goal:", error);
-                                    }
-                                }}
+                                style={styles.detailsBtn}
+                                onPress={() => openDetailsModal(item)}
                             >
-                                <Text style={styles.toolBtnText}>
-                                    {item.completed ? 'Unmark' : 'Mark as completed'}
-                                </Text>
+                                <Text style={styles.detailsBtnText}>Details</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity
-                                style={[styles.toolBtn, {width: 90}]}
-                                onPress={() => {
-                                    setGoalToDelete(item);
-                                    setShowConfirmModal(true);
-                                }}
-                            >
-                                <Text style={styles.toolBtnText}>Delete</Text>
-                            </TouchableOpacity>
+                            <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                                <TouchableOpacity
+                                    style={[
+                                        styles.toolBtn,
+                                        { backgroundColor: item.completed ? '#acdf54' : '#ffb3fd' }
+                                    ]}
+                                    onPress={async () => {
+                                        const updatedGoals = goals.map((goal) =>
+                                            goal === item ? { ...goal, completed: !goal.completed } : goal
+                                        );
+                                        setGoals(updatedGoals);
+                                        try {
+                                            await AsyncStorage.setItem('goalsData', JSON.stringify(updatedGoals));
+                                        } catch (error) {
+                                            console.error("Error updating goal:", error);
+                                        }
+                                    }}
+                                >
+                                    <Text style={styles.toolBtnText}>
+                                        {item.completed ? 'Unmark' : 'Mark as completed'}
+                                    </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={[styles.toolBtn, {width: 90}]}
+                                    onPress={() => {
+                                        setGoalToDelete(item);
+                                        setShowConfirmModal(true);
+                                    }}
+                                >
+                                    <Text style={styles.toolBtnText}>Delete</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                    </View>
-                )}
-            />
+                    )}
+                />
 
-            <View style={styles.pagination}>
-                {goals.map((_, index) => (
-                    <View
-                        key={index}
-                        style={[
-                            styles.dot,
-                            currentIndex === index && styles.activeDot,
-                        ]}
-                    />
-                ))}
-            </View>
+                <View style={styles.pagination}>
+                    {goals.map((_, index) => (
+                        <View
+                            key={index}
+                            style={[
+                                styles.dot,
+                                currentIndex === index && styles.activeDot,
+                            ]}
+                        />
+                    ))}
+                </View>
 
-            <TouchableOpacity style={styles.addBtn} onPress={() => navigation.navigate('AddGoalScreen')}>
-                <Text style={styles.addBtnText}>+</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-                style={[
-                    styles.guideBtn,
-                    { backgroundColor: '#e75da5'},
-                    !isPurchased && {opacity: 0.35}
-                ]}
-                onPress={() => navigation.navigate('GuideScreen')}
-                disabled={!isPurchased}
-            >
-                <Text style={styles.guideBtnText}>The complete guide</Text>
-            </TouchableOpacity>
-
-            {!isPurchased && (
-                <TouchableOpacity style={styles.buyBtn} onPress={handleBuy}>
-                    <Text style={styles.buyBtnText}>2000</Text>
+                <TouchableOpacity style={styles.addBtn} onPress={() => navigation.navigate('AddGoalScreen')}>
+                    <Text style={styles.addBtnText}>+</Text>
                 </TouchableOpacity>
-            )}
 
-            <Modal
-                transparent={true}
-                visible={showDetailsModal}
-                animationType="fade"
-                onRequestClose={() => setShowDetailsModal(false)}
-            >
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                        {selectedGoal && (
-                            <>
-                                <Text style={styles.modalText}>Title: {selectedGoal.title}</Text>
-                                <Text style={styles.modalText}>Date: {selectedGoal.date.day}/{selectedGoal.date.month}/{selectedGoal.date.year}</Text>
-                                <Text style={styles.modalText}>Goal: {selectedGoal.goalInput}</Text>
-                                <Text style={styles.modalText}>Success Measure: {selectedGoal.successMeasure}</Text>
-                                <Text style={styles.modalText}>Resources: {selectedGoal.resources}</Text>
-                                <Text style={styles.modalText}>Category: {selectedGoal.category}</Text>
-                            </>
-                        )}
-                        <TouchableOpacity
-                            style={styles.modalCloseBtn}
-                            onPress={() => setShowDetailsModal(false)}
-                        >
-                            <Text style={styles.modalCloseBtnText}>Close</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
+                <TouchableOpacity
+                    style={[
+                        styles.guideBtn,
+                        { backgroundColor: '#e75da5'},
+                        !isPurchased && {opacity: 0.35}
+                    ]}
+                    onPress={() => navigation.navigate('GuideScreen')}
+                    disabled={!isPurchased}
+                >
+                    <Text style={styles.guideBtnText}>The complete guide</Text>
+                </TouchableOpacity>
 
-            <Modal
-                transparent={true}
-                visible={showModal}
-                animationType="fade"
-                onRequestClose={() => setShowModal(false)}
-            >
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                        <Text style={styles.modalText}>Purchase successful!</Text>
-                        <TouchableOpacity
-                            style={styles.modalCloseBtn}
-                            onPress={() => setShowModal(false)}
-                        >
-                            <Text style={styles.modalCloseBtnText}>Close</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
+                {!isPurchased && (
+                    <TouchableOpacity style={styles.buyBtn} onPress={handleBuy}>
+                        <Text style={styles.buyBtnText}>2000</Text>
+                    </TouchableOpacity>
+                )}
 
-            <Modal
-                transparent={true}
-                visible={showConfirmModal}
-                animationType="fade"
-                onRequestClose={() => setShowConfirmModal(false)}
-            >
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                        <Text style={styles.modalText}>Are you sure you want to delete this goal?</Text>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
-                            <TouchableOpacity
-                                style={[styles.modalCloseBtn, { backgroundColor: '#930c5f' }]}
-                                onPress={deleteGoal}
-                            >
-                                <Text style={styles.modalCloseBtnText}>Delete</Text>
-                            </TouchableOpacity>
+                <Modal
+                    transparent={true}
+                    visible={showDetailsModal}
+                    animationType="fade"
+                    onRequestClose={() => setShowDetailsModal(false)}
+                >
+                    <View style={styles.modalContainer}>
+                        <View style={styles.modalContent}>
+                            {selectedGoal && (
+                                <>
+                                    <Text style={styles.modalText}>Title: {selectedGoal.title}</Text>
+                                    <Text style={styles.modalText}>Date: {selectedGoal.date.day}/{selectedGoal.date.month}/{selectedGoal.date.year}</Text>
+                                    <Text style={styles.modalText}>Goal: {selectedGoal.goalInput}</Text>
+                                    <Text style={styles.modalText}>Success Measure: {selectedGoal.successMeasure}</Text>
+                                    <Text style={styles.modalText}>Resources: {selectedGoal.resources}</Text>
+                                    <Text style={styles.modalText}>Category: {selectedGoal.category}</Text>
+                                </>
+                            )}
                             <TouchableOpacity
                                 style={styles.modalCloseBtn}
-                                onPress={() => setShowConfirmModal(false)}
+                                onPress={() => setShowDetailsModal(false)}
                             >
-                                <Text style={styles.modalCloseBtnText}>Cancel</Text>
+                                <Text style={styles.modalCloseBtnText}>Close</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
-                </View>
-            </Modal>
+                </Modal>
 
-        </View>
+                <Modal
+                    transparent={true}
+                    visible={showModal}
+                    animationType="fade"
+                    onRequestClose={() => setShowModal(false)}
+                >
+                    <View style={styles.modalContainer}>
+                        <View style={styles.modalContent}>
+                            <Text style={styles.modalText}>Purchase successful!</Text>
+                            <TouchableOpacity
+                                style={styles.modalCloseBtn}
+                                onPress={() => setShowModal(false)}
+                            >
+                                <Text style={styles.modalCloseBtnText}>Close</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
+
+                <Modal
+                    transparent={true}
+                    visible={showConfirmModal}
+                    animationType="fade"
+                    onRequestClose={() => setShowConfirmModal(false)}
+                >
+                    <View style={styles.modalContainer}>
+                        <View style={styles.modalContent}>
+                            <Text style={styles.modalText}>Are you sure you want to delete this goal?</Text>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                                <TouchableOpacity
+                                    style={[styles.modalCloseBtn, { backgroundColor: '#930c5f' }]}
+                                    onPress={deleteGoal}
+                                >
+                                    <Text style={styles.modalCloseBtnText}>Delete</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.modalCloseBtn}
+                                    onPress={() => setShowConfirmModal(false)}
+                                >
+                                    <Text style={styles.modalCloseBtnText}>Cancel</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+
+            </View>
+        </ImageBackground>
     );
 };
 
@@ -267,7 +269,6 @@ const styles = StyleSheet.create({
         padding: 30,
         paddingTop: height * 0.07,
         paddingBottom: height * 0.13,
-        backgroundColor: '#cfe2f3'
     },
     title: {
         fontWeight: "800",

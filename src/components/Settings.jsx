@@ -74,61 +74,59 @@ const Settings = () => {
     };
 
     return (
-        // <ImageBackground source={require('../assets/newDiz/back1.jpg')} style={{flex: 1}}>
-        <View style={styles.container}>
-            {showResetConfirmation ? (
-                <>
-                    <Text style={styles.confirmationText}>
-                    Are you sure you want to reset your account? This action will delete your profile, including your user name, uploaded photo, score, articles, pinned, goal guide along with your set goals!
-                    </Text>
-                    <TouchableOpacity style={styles.resetBtn} onPress={handleReset}>
-                        <Text style={styles.btnText}>Reset</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.cancelReset} onPress={() => setShowResetConfirmation(false)}>
-                        <Text style={styles.cancelBtnText}>Close</Text>
-                    </TouchableOpacity>
-                </>
-            ) : (
-                <>
-                    <Text style={styles.title}>Settings</Text>
-
-                    <View style={{height: height * 0.15}} />
-
-                    <View style={styles.regulatorContainer}>
-                        {/* <Text style={styles.regulatorText}>Loudness</Text> */}
-                        <View style={[{width: 60, height: 60}, !isPlaying && {opacity: 0.5}]}>
-                            <Icons type={'music'} />
-                        </View>
-                        <Text style={[styles.toggleText, isPlaying ? styles.toggleTextOn : styles.toggleTextOff]}>
-                            {isPlaying ? 'On' : 'Off'}
+        <ImageBackground source={require('../assets/back/5.png')} style={{flex: 1}}>
+            <View style={styles.container}>
+                {showResetConfirmation ? (
+                    <>
+                        <Text style={styles.confirmationText}>
+                        Are you sure you want to reset your account? This action will delete your profile, including your user name, uploaded photo, score, articles, pinned, goal guide along with your set goals!
                         </Text>
-                        <TouchableOpacity style={[styles.toggleContainer, isPlaying ? styles.toggleContainer : styles.toggleContainerOff]} onPress={handleToggleLoudness}>
-                            <View style={[styles.toggle, isPlaying ? styles.toggleOn : styles.toggleOff]}></View>
+                        <TouchableOpacity style={styles.resetBtn} onPress={handleReset}>
+                            <Text style={styles.btnText}>Reset</Text>
                         </TouchableOpacity>
-                    </View>
+                        <TouchableOpacity style={styles.cancelReset} onPress={() => setShowResetConfirmation(false)}>
+                            <Text style={styles.cancelBtnText}>Close</Text>
+                        </TouchableOpacity>
+                    </>
+                ) : (
+                    <>
+                        <Text style={styles.title}>Settings</Text>
 
-                    <View style={styles.regulatorContainer}>
-                        {/* <Text style={styles.regulatorText}>Vibration</Text> */}
-                        <View style={[{width: 60, height: 60}, !isPlaying && {opacity: 0.5}]}>
-                            <Icons type={'vibration'} />
+                        <View style={{height: height * 0.15}} />
+
+                        <View style={styles.regulatorContainer}>
+                            <View style={[{width: 60, height: 60}, !isPlaying && {opacity: 0.5}]}>
+                                <Icons type={'music'} />
+                            </View>
+                            <Text style={[styles.toggleText, isPlaying ? styles.toggleTextOn : styles.toggleTextOff]}>
+                                {isPlaying ? 'On' : 'Off'}
+                            </Text>
+                            <TouchableOpacity style={[styles.toggleContainer, isPlaying ? styles.toggleContainer : styles.toggleContainerOff]} onPress={handleToggleLoudness}>
+                                <View style={[styles.toggle, isPlaying ? styles.toggleOn : styles.toggleOff]}></View>
+                            </TouchableOpacity>
                         </View>
-                        <Text style={[styles.toggleText, vibrationEnabled ? styles.toggleTextOn : styles.toggleTextOff]}>
-                            {vibrationEnabled ? 'On' : 'Off'}
-                        </Text>
-                        <TouchableOpacity style={[styles.toggleContainer, vibrationEnabled ? styles.toggleContainer : styles.toggleContainerOff]} onPress={handleToggleVibration}>
-                            <View style={[styles.toggle, vibrationEnabled ? styles.toggleOn : styles.toggleOff]}></View>
+
+                        <View style={styles.regulatorContainer}>
+                            <View style={[{width: 60, height: 60}, !vibrationEnabled && {opacity: 0.5}]}>
+                                <Icons type={'vibration'} />
+                            </View>
+                            <Text style={[styles.toggleText, vibrationEnabled ? styles.toggleTextOn : styles.toggleTextOff]}>
+                                {vibrationEnabled ? 'On' : 'Off'}
+                            </Text>
+                            <TouchableOpacity style={[styles.toggleContainer, vibrationEnabled ? styles.toggleContainer : styles.toggleContainerOff]} onPress={handleToggleVibration}>
+                                <View style={[styles.toggle, vibrationEnabled ? styles.toggleOn : styles.toggleOff]}></View>
+                            </TouchableOpacity>
+                        </View>
+
+                        <View style={{height: height * 0.11}} />
+
+                        <TouchableOpacity style={styles.resetBtn} onPress={() => setShowResetConfirmation(true)}>
+                            <Text style={styles.btnText}>Reset</Text>
                         </TouchableOpacity>
-                    </View>
-
-                    <View style={{height: height * 0.11}} />
-
-                    <TouchableOpacity style={styles.resetBtn} onPress={() => setShowResetConfirmation(true)}>
-                        <Text style={styles.btnText}>Reset</Text>
-                    </TouchableOpacity>
-                </>
-            )}
-        </View>
-        // </ImageBackground>
+                    </>
+                )}
+            </View>
+        </ImageBackground>
     );
 };
 
@@ -142,7 +140,6 @@ const styles = StyleSheet.create({
         paddingTop: height * 0.08,
         alignItems: 'center',
         justifyContent: 'flex-start',
-        backgroundColor: '#cfe2f3'
     },
     title: {
         fontWeight: 'bold',

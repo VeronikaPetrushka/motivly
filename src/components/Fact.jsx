@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-  ScrollView,
-  Alert,
-} from "react-native";
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, ScrollView, Alert, ImageBackground } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icons from "./Icons";
@@ -57,52 +49,54 @@ const Fact = ({ fact }) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <View style={{ flexDirection: "row"}}>
-        <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
-          <Icons type={"back"} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.save} onPress={toggleSave}>
-          <Icons type={isSaved ? "saved" : "save"} />
-        </TouchableOpacity>
+    <ImageBackground source={require('../assets/back/5.png')} style={{flex: 1}}>
+      <View style={styles.container}>
+        <View style={{ flexDirection: "row"}}>
+          <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
+            <Icons type={"back"} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.save} onPress={toggleSave}>
+            <Icons type={isSaved ? "saved" : "save"} />
+          </TouchableOpacity>
+        </View>
+
+        <ScrollView style={{ width: "100%" }}>
+          {fact.title && <Text style={styles.title}>{fact.title}</Text>}
+
+          {fact.description && <Text style={styles.description}>{fact.description}</Text>}
+
+          {fact.subTitle && <Text style={styles.subTitle}>{fact.subTitle}</Text>}
+
+          {fact.points && (
+            <View style={styles.pointsContainer}>
+              {fact.points.map((item, index) => (
+                <View key={index} style={styles.pointItem}>
+                  {item.point && <Text style={styles.pointTitle}>{item.point}</Text>}
+                  {item.text && <Text style={styles.description}>{item.text}</Text>}
+
+                  {item.list && (
+                    <View style={styles.listContainer}>
+                    {item.list.map((listItem, listIndex) => (
+                      <Text key={listIndex} style={styles.listItem}>
+                        - {listItem}
+                      </Text>
+                    ))}
+                    </View>
+                  )}
+                </View>
+              ))}
+            </View>
+          )}
+
+          {fact.conclusion && (
+            <Text style={styles.conclusion}>
+              <Text style={styles.conclusionBold}>Conclusion: </Text>
+              {fact.conclusion}
+            </Text>
+          )}
+        </ScrollView>
       </View>
-
-      <ScrollView style={{ width: "100%" }}>
-        {fact.title && <Text style={styles.title}>{fact.title}</Text>}
-
-        {fact.description && <Text style={styles.description}>{fact.description}</Text>}
-
-        {fact.subTitle && <Text style={styles.subTitle}>{fact.subTitle}</Text>}
-
-        {fact.points && (
-          <View style={styles.pointsContainer}>
-            {fact.points.map((item, index) => (
-              <View key={index} style={styles.pointItem}>
-                {item.point && <Text style={styles.pointTitle}>{item.point}</Text>}
-                {item.text && <Text style={styles.description}>{item.text}</Text>}
-
-                {item.list && (
-                  <View style={styles.listContainer}>
-                  {item.list.map((listItem, listIndex) => (
-                    <Text key={listIndex} style={styles.listItem}>
-                      - {listItem}
-                    </Text>
-                  ))}
-                  </View>
-                )}
-              </View>
-            ))}
-          </View>
-        )}
-
-        {fact.conclusion && (
-          <Text style={styles.conclusion}>
-            <Text style={styles.conclusionBold}>Conclusion: </Text>
-            {fact.conclusion}
-          </Text>
-        )}
-      </ScrollView>
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -111,7 +105,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     paddingTop: height * 0.12,
-    backgroundColor: '#cfe2f3'
   },
   back: {
     width: 60,
