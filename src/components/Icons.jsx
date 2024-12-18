@@ -61,6 +61,9 @@ const Icons = ({ type }) => {
     case 'vibration':
         imageSource = require('../assets/common/vibration.png');
     break;
+    case 'bonus':
+        imageSource = require('../assets/decor/bonus.png');
+    break;
   }
 
   return (

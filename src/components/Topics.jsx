@@ -30,7 +30,7 @@ const Topics = ({ difficulty }) => {
                 <ScrollView style={{width: '100%'}}>
                     <View style={styles.btnContainer}>
                         {difficulty === 'easy' && easy.map((item, index) => (
-                            <View key={index} style={{width: '100%', marginBottom: height * 0.04, alignItems: 'center'}}>
+                            <View key={index} style={{width: '100%', marginBottom: height * 0.04, alignItems: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 12, paddingBottom: 15, height: height * 0.33, justifyContent: 'space-between'}}>
                                 <TouchableOpacity style={styles.btn} onPress={() => handleNavigation(item, 'easy')}>
                                     <Image source={item.image} style={styles.image}/>
                                 </TouchableOpacity>
@@ -43,7 +43,7 @@ const Topics = ({ difficulty }) => {
                 <ScrollView style={{width: '100%'}}>
                     <View style={styles.btnContainer}>
                         {difficulty === 'peak' && peak.map((item, index) => (
-                            <View key={index} style={{width: '100%', marginBottom: height * 0.04, alignItems: 'center'}}>
+                            <View key={index} style={{width: '100%', marginBottom: height * 0.04, alignItems: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 12, paddingBottom: 15, height: height * 0.33, justifyContent: 'space-between'}}>
                                 <TouchableOpacity style={styles.btn} onPress={() => handleNavigation(item, 'peak')}>
                                     <Image source={item.image} style={styles.image}/>
                                 </TouchableOpacity>
@@ -92,24 +92,21 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'flex-start',
         justifyContent: 'space-around',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
     },
 
     btn: {
         width: '100%',
-        height: height * 0.25,
         borderRadius: 12,
-        borderWidth: 2,
-        borderColor: '#9d7ff7',
         overflow: 'hidden',
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 5
+        marginBottom: 5,
     },
 
     image: {
         width: '100%',
-        height: '100%',
+        height: height * 0.25,
         resizeMode: 'cover',
     },
 

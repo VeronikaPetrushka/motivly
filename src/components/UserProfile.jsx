@@ -8,22 +8,27 @@ const { height } = Dimensions.get('window');
 
 const UserProfile = ({ visible, onClose }) => {
   const [name, setName] = useState("");
+  const [age, setAge] = useState(null);
   const [uploadedImage, setUploadedImage] = useState({ uri: Image.resolveAssetSource(require('../assets/avatar/user.png')).uri });
   const [buttonText, setButtonText] = useState("Create account");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorName, setErrorName] = useState("");
+  const [errorAge, setErrorAge] = useState("");
 
   useEffect(() => {
     const loadProfile = async () => {
       try {
-        const storedName = await AsyncStorage.getItem('userProfile');
+        const storedData = await AsyncStorage.getItem('userProfile');
         const storedImageUri = await AsyncStorage.getItem('uploadedImage');
 
-        if (storedName) {
-          setName(storedName);
+        if (storedData) {
+          const parsedData = JSON.parse(storedData);
+          setName(parsedData.name);
+          setAge(parsedData.age);
           setButtonText("Save changes");
         } else {
           setName("");
-          setButtonText("Create account");
+          setAge(null);
+          setButtonText("Create");
         }
 
         if (storedImageUri) {
@@ -32,7 +37,8 @@ const UserProfile = ({ visible, onClose }) => {
           setUploadedImage({ uri: Image.resolveAssetSource(require('../assets/avatar/user.png')).uri });
         }
 
-        setErrorMessage("");
+        setErrorName("");
+        setErrorAge("");
       } catch (error) {
         console.error('Error loading user profile:', error);
       }
@@ -47,14 +53,24 @@ const UserProfile = ({ visible, onClose }) => {
     setName(text);
   };
 
+  const handleAgeChange = (text) => {
+    setAge(text)
+  };
+
   const handleSubmit = async () => {
-    if (name.length > 20) {
-      setErrorMessage("Name cannot exceed 20 characters.");
+    if (name.length > 13) {
+      setErrorName("Name cannot exceed 13 characters.");
       return;
     }
 
+    const numericAge = parseInt(age, 10);
+    if (!numericAge || numericAge <= 0) {
+        setErrorAge("Age must be a valid positive number.");
+        return;
+    }
+
     try {
-      await AsyncStorage.setItem('userProfile', name);
+        await AsyncStorage.setItem('userProfile', JSON.stringify({ name, age }));
 
       if (uploadedImage.uri) {
         await AsyncStorage.setItem('uploadedImage', uploadedImage.uri);
@@ -67,7 +83,6 @@ const UserProfile = ({ visible, onClose }) => {
       console.error('Error saving user profile:', error);
     }
   };
-
 
   const uploadImageFromLibrary = () => {
     launchImageLibrary(
@@ -114,6 +129,7 @@ const UserProfile = ({ visible, onClose }) => {
                   </TouchableOpacity>
 
                     <View style={styles.inputContainer}>
+
                       <TextInput
                         value={name}
                         placeholder="Enter your name"
@@ -121,16 +137,28 @@ const UserProfile = ({ visible, onClose }) => {
                         onChangeText={handleNameChange}
                         style={styles.input}
                       />
-                      {errorMessage ? (
-                        <Text style={styles.errorText}>{errorMessage}</Text>
+                      {errorName ? (
+                        <Text style={styles.errorText}>{errorName}</Text>
                       ) : null}
+
+                      <TextInput
+                        value={age}
+                        placeholder="Enter your age"
+                        placeholderTextColor="#fa7fd9"
+                        onChangeText={handleAgeChange}
+                        style={styles.input}
+                      />
+                      {errorAge ? (
+                        <Text style={styles.errorText}>{errorAge}</Text>
+                      ) : null}
+
                       <TouchableOpacity style={styles.btnCreate} onPress={handleSubmit}>
                         <Text style={styles.btnCreateText}>{buttonText}</Text>
                       </TouchableOpacity>
                     </View>
 
                 </View>
-                <View style={{height: height * 0.2}}></View>
+                <View style={{height: height * 0.05}}></View>
                 </ScrollView>
 
               </View>
@@ -211,20 +239,19 @@ const styles = {
 
   inputContainer: {
     width: "100%",
-    height: "50%",
-    justifyContent: "space-between"
+    alignItems: 'center'
   },
 
   input: {
     paddingVertical: 10,
     paddingHorizontal: 20,
-    marginTop: height * 0.05,
     borderWidth: 1,
     borderColor: "#432887",
     borderRadius: 10,
     width: "100%",
     fontSize: 17,
     color: '#432887',
+    marginBottom: 10
   },
 
   btnCreate: {
@@ -232,10 +259,8 @@ const styles = {
     alignItems: "center",
     padding: 12,
     borderRadius: 10,
-    marginBottom: 10,
-    position: 'absolute',
-    bottom: height * 0.08,
     backgroundColor: '#8454ff',
+    marginTop: 10
   },
 
   btnCreateText: {
@@ -258,7 +283,8 @@ const styles = {
     borderWidth: 1,
     borderColor: '#817a6e',
     borderRadius: 10,
-    width: '100%'
+    width: '100%',
+    marginBottom: 20
   },
 
   errorText: {

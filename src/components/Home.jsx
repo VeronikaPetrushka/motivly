@@ -5,6 +5,7 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import UserProfile from './UserProfile';
 import AboutModal from './AboutModal';
 import DailyModal from './DailyModal';
+import Icons from './Icons';
 
 const { height } = Dimensions.get('window');
 
@@ -35,8 +36,13 @@ const Home = () => {
     
       const loadName = async () => {
         try {
-          const storedName = await AsyncStorage.getItem('userProfile');
-          setUserName(storedName || '');
+          const storedInfo = await AsyncStorage.getItem('userProfile');
+          const parsedData = JSON.parse(storedInfo);
+
+          if(parsedData) {
+            setUserName(parsedData.name || '');
+          }
+          
         } catch (error) {
           console.error('Error loading name:', error);
         }
@@ -141,11 +147,11 @@ const Home = () => {
                       />
                   </View>
                       <View style={styles.nameBox}>
-                          <Text style={styles.name}>Hi, {userName || "user"}</Text>
+                          <Text style={styles.name}>{userName ? `Hi, ${userName}` : 'Welcome'}</Text>
                       </View>
               </TouchableOpacity>
 
-              <Image source={require('../assets/decor/1.png')} style={styles.image} />
+              <Image source={require('../assets/decor/2.png')} style={styles.image} />
 
               <TouchableOpacity style={[styles.btn, {width: '100%', marginBottom: height * 0.05, backgroundColor: '#fcccf0'}]} onPress={() => navigation.navigate('QuizModeScreen')}>
                   <Text style={[styles.btnTxt, {color: '#ff67d9'}]}>Unleash your potential</Text>
@@ -154,12 +160,12 @@ const Home = () => {
               <View style={styles.btnContainer}>
 
               <TouchableOpacity
-                  style={[styles.btn, buttonDisabled && {opacity: 0.6}]}
+                  style={[styles.btn, buttonDisabled && {opacity: 0.6}, {height: 52, padding: 0}]}
                   onPress={handleBonusPress}
                   disabled={buttonDisabled}
                   >
                   <Text style={styles.btnTxt}>
-                      {buttonDisabled ? `${timeLeft}` : 'Daily bonus'}
+                      {buttonDisabled ? `${timeLeft}` : <View style={{width: 50, height: 50, position: 'absolute', top: 0}}><Icons type={'bonus'} /></View> }
                   </Text>
               </TouchableOpacity>
 

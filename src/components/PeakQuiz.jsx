@@ -18,12 +18,13 @@ const ChampionQuiz = ({ quiz }) => {
   const [quizEnded, setQuizEnded] = useState(false);
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
-  const [showHints, setShowHints] = useState(false);
-  const [showLives, setShowLives] = useState(false);
   const [hintsUsed, setHintsUsed] = useState({
     skip: false,
     showAnswer: false,
   });
+  const [hintsModalVisible, setHintsModalVisible] = useState(false);
+  const [livesModalVisible, setLivesModalVisible] = useState(false);
+
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -47,7 +48,7 @@ const ChampionQuiz = ({ quiz }) => {
   useEffect(() => {
     let timerInterval;
   
-    if (!quizEnded && !showHints && !showLives) {
+    if (!quizEnded && !hintsModalVisible && !livesModalVisible) {
       timerInterval = setInterval(() => {
         if (timer > 0 && !quizEnded) {
           setTimer(timer - 1);
@@ -59,15 +60,15 @@ const ChampionQuiz = ({ quiz }) => {
     }
   
     return () => clearInterval(timerInterval);
-  }, [timer, quizEnded, showHints, showLives]);
+  }, [timer, quizEnded, hintsModalVisible, livesModalVisible]);
 
   useEffect(() => {
-    if (!showHints && !showLives) {
+    if (!hintsModalVisible && !livesModalVisible) {
       setAnswered(false);
       setSelectedOption(null);
       setCorrectOption(null);
     }
-  }, [showHints, showLives]);
+  }, [hintsModalVisible, livesModalVisible]);
 
   useEffect(() => {
     setHintsUsed({ skip: false, showAnswer: false });
@@ -138,7 +139,7 @@ const ChampionQuiz = ({ quiz }) => {
       setHintsUsed((prev) => ({ ...prev, showAnswer: true }));
     }
   
-    setShowHints(false);
+    setHintsModalVisible(false);
   };
   
 
@@ -151,83 +152,8 @@ const ChampionQuiz = ({ quiz }) => {
       setLives((prevLives) => Math.min(prevLives + amount, 3));
     }
 
-    setShowLives(false);
+    setLivesModalVisible(false);
   };
-
-  const renderHints = () => {
-    const hints = [
-      { id: 'skip', text: 'Skip Question - 50 Points', price: 50 },
-      { id: 'showAnswer', text: 'Show Answer - 75 Points', price: 75 },
-    ];
-  
-    return (
-      <View style={styles.hintsContainer}>
-        <FlatList
-          horizontal
-          data={hints}
-          keyExtractor={(item) => item.id}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ paddingHorizontal: 10 }}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={[styles.hintCard, { opacity: score >= item.price ? 1 : 0.5 }]}
-              onPress={() => score >= item.price && handleHintSelect(item.id)}
-              disabled={score < item.price}
-            >
-              <View style={{width: height * 0.1, height: height * 0.1, marginBottom: height * 0.04}}>
-                <Icons type={'hint'} />
-              </View>
-              <Text style={styles.hintText}>{item.text}</Text>
-            </TouchableOpacity>
-          )}
-        />
-        <TouchableOpacity style={styles.closeButton} onPress={() => setShowHints(false)}>
-          <Text style={styles.closeButtonText}>Close</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  };
-  
-  const renderLives = () => {
-    const livesOptions = [
-      { id: 1, text: '1 - 50 Points', price: 50 },
-      { id: 2, text: '2 - 75 Points', price: 75 },
-      { id: 3, text: '3 - 100 Points', price: 100 },
-    ];
-  
-    return (
-      <View style={styles.hintsContainer}>
-        <FlatList
-          horizontal
-          data={livesOptions}
-          keyExtractor={(_, index) => `life-${index}`}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ paddingHorizontal: 10 }}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={[
-                styles.hintCard,
-                {
-                  opacity: score >= item.price && lives + item.id <= 3 ? 1 : 0.5,
-                  flexDirection: 'row'
-                },
-              ]}
-              onPress={() => handleLifePurchase(item.id)}
-              disabled={score < item.price || lives + item.id > 3}
-            >
-              <View style={{width: height * 0.1, height: height * 0.1, marginRight: 5}}>
-                <Icons type={'heart'} />
-              </View>
-              <Text style={styles.hintText}>{item.text}</Text>
-            </TouchableOpacity>
-          )}
-        />
-        <TouchableOpacity style={styles.closeButton} onPress={() => setShowLives(false)}>
-          <Text style={styles.closeButtonText}>Close</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  };  
 
   const renderQuestion = () => {
     const question = quiz.questions[currentQuestionIndex];
@@ -235,23 +161,29 @@ const ChampionQuiz = ({ quiz }) => {
   
     return (
       <View style={styles.questionContainer}>
-        <Text style={styles.question}>{question.question}</Text>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
-          <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => setShowLives(true)}>
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: height * 0.02 }}>
+
+          <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => setLivesModalVisible(true)}>
             {[...Array(3)].map((_, index) => (
               <View key={index} style={styles.heart}>
                 <Icons type={index < lives ? 'heart' : 'heart-grey'} />
               </View>
             ))}
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => setShowHints(true)} style={styles.hint}>
+
+          <TouchableOpacity onPress={() => setHintsModalVisible(true)} style={styles.hint}>
             <Icons type="hint" />
           </TouchableOpacity>
-        </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
+
           <Text style={styles.timer}>{formatTime(timer)}</Text>
+
           <Text style={styles.timer}>{score}</Text>
+
         </View>
+
+        <Text style={styles.question}>{question.question}</Text>
+        
         <View style={styles.optionsContainer}>
           {options.map((option, index) => {
             const isSelected = option === selectedOption;
@@ -277,6 +209,95 @@ const ChampionQuiz = ({ quiz }) => {
           })}
         </View>
       </View>
+    );
+  };
+
+  const renderHintsModal = () => {
+    const hints = [
+      { id: 'skip', text: 'Skip Question', price: 50 },
+      { id: 'showAnswer', text: 'Show Answer', price: 75 },
+    ];
+  
+    return (
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={hintsModalVisible}
+        onRequestClose={() => setHintsModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.title}>Available Hints</Text>
+            <ScrollView>
+              {hints.map((hint) => (
+                <View key={hint.id} style={styles.hintRow}>
+                  <Text style={styles.modalText}>{hint.text} - {hint.price} Points</Text>
+                  <TouchableOpacity
+                    style={styles.buyButton}
+                    onPress={() => {
+                      if (score >= hint.price) {
+                        handleHintSelect(hint.id);
+                      } else {
+                        Alert.alert('Not Enough Points', 'You do not have enough points to use this hint.');
+                      }
+                    }}
+                  >
+                    <Text style={styles.buyButtonText}>Buy</Text>
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </ScrollView>
+            <TouchableOpacity style={styles.closeButton} onPress={() => setHintsModalVisible(false)}>
+              <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+    );
+  };
+
+  const renderLivesModal = () => {
+    const livesOptions = [
+      { id: 1, text: '1 Life - 50 Points', price: 50 },
+      { id: 2, text: '2 Lives - 75 Points', price: 75 },
+      { id: 3, text: '3 Lives - 100 Points', price: 100 },
+    ];
+  
+    return (
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={livesModalVisible}
+        onRequestClose={() => setLivesModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.title}>Buy Lives</Text>
+            <ScrollView>
+              {livesOptions.map((option) => (
+                <View key={option.id} style={styles.hintRow}>
+                  <Text style={styles.modalText}>{option.text}</Text>
+                  <TouchableOpacity
+                    style={styles.buyButton}
+                    onPress={() => {
+                      if (score >= option.price) {
+                        handleLifePurchase(option.id);
+                      } else {
+                        Alert.alert('Not Enough Points', 'You do not have enough points to buy this life.');
+                      }
+                    }}
+                  >
+                    <Text style={styles.buyButtonText}>Buy</Text>
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </ScrollView>
+            <TouchableOpacity style={styles.closeButton} onPress={() => setLivesModalVisible(false)}>
+              <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     );
   };
 
@@ -359,15 +380,18 @@ const ChampionQuiz = ({ quiz }) => {
       <View style={styles.container}>
         <Text style={styles.topic}>{quiz.topic}</Text>
         <Image source={quiz.image} style={styles.image} />
-        {quizEnded ? renderFinish() : showHints ? (
-          renderHints()
-        ) : showLives ? (
-          renderLives()
-        ) : currentQuestionIndex < quiz.questions.length ? (
-          renderQuestion()
-        ) : (
+
+        {quizEnded ? (
           renderFinish()
-        )}
+          ) : (
+            <>
+              {hintsModalVisible && renderHintsModal()}
+
+              {livesModalVisible && renderLivesModal()}
+
+              {currentQuestionIndex < quiz.questions.length && renderQuestion()}
+            </>
+          )}
 
         <Modal
               transparent={true}
@@ -599,7 +623,53 @@ const styles = StyleSheet.create({
       position: 'absolute',
       top: 10,
       right: 10,
-  }
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalContent: {
+    width: '90%',
+    padding: 20,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    elevation: 10,
+  },
+  buyButton: {
+    backgroundColor: '#8454ff',
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
+  buyButtonText: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 16,
+  },
+  closeButton: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  closeButtonText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: 'red',
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: '700',
+    color: '#432887',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  hintRow: {
+    height: 60,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },  
 });
 
 export default ChampionQuiz;

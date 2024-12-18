@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Dimensions, Modal, ImageBackground } from "react-native";
+import { StyleSheet, View, Text, Image, TouchableOpacity, Dimensions, Modal, ImageBackground } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icons from "./Icons";
 
@@ -36,6 +36,7 @@ const QuizMode = () => {
           style={styles.btn}
           onPress={() => handleModeSelect("easy")}
         >
+          <Image source={require('../assets/decor/4.png')} style={styles.image} />
           <Text style={styles.btnText}>First Step</Text>
         </TouchableOpacity>
 
@@ -43,12 +44,13 @@ const QuizMode = () => {
           style={styles.btn}
           onPress={() => handleModeSelect("peak")}
         >
+          <Image source={require('../assets/decor/3.png')} style={styles.image} />
           <Text style={styles.btnText}>Peak of success</Text>
         </TouchableOpacity>
 
         <Modal
           visible={modalVisible}
-          animationType="slide"
+          animationType="fade"
           transparent={true}
           onRequestClose={() => setModalVisible(false)}
         >
@@ -111,25 +113,34 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 34,
     textAlign: "center",
-    marginBottom: height * 0.3,
+    marginBottom: height * 0.05,
     color: "#e75da5",
   },
   btn: {
-    padding: 20,
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
+    height: height * 0.33,
     borderWidth: 0.5,
     borderColor: "#fff",
-    backgroundColor: "#9d7ff7",
     borderRadius: 12,
     marginBottom: 10,
     zIndex: 10,
   },
+  image: {
+    width: "100%",
+    height: '100%',
+    resizeMode: "cover",
+    overflow: 'hidden',
+    borderRadius: 12,
+  },
   btnText: {
-    fontSize: 20,
+    fontSize: 26,
     fontWeight: "900",
     color: "#fff",
+    zIndex: 12,
+    position: 'absolute',
+    top: '50%'
   },
   modalOverlay: {
     flex: 1,
